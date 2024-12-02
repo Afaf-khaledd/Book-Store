@@ -70,6 +70,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1075248763969',
     projectId: 'book-store-48bae',
     storageBucket: 'book-store-48bae.firebasestorage.app',
-    iosBundleId: 'com.example.bookStore',
+    iosBundleId: 'com.example.book_store',
   );
 }
