@@ -19,4 +19,13 @@ class Validators {
     }
     return null;
   }
+  static String? validatePhone(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Phone is required";
+    }
+    if (value.length < 11 || value.length > 11) {
+      return "Phone is 11 numbers start with 01";
+    }
+    return null;
+  }
 }
