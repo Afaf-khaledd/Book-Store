@@ -1,6 +1,9 @@
 import 'package:book_store/User/features/layouts/view/OnboardingPage.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/SharedPreference.dart';
+import 'MainNavPage.dart';
+
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
@@ -46,13 +49,20 @@ class _SplashPageState extends State<SplashPage> {
       ),
     );
   }
-  void navigateToHome() {
-    Future.delayed(const Duration(seconds: 3),(){
-      // nav
-      Navigator.pushReplacement(context, MaterialPageRoute(
-        builder: (BuildContext context) => const OnboardingPage(),
-      ),
-      );
+  void navigateToHome() async{
+    bool rememberMe = await SharedPreference.instance.getRememberMe();
+    Future.delayed(const Duration(seconds: 3), () {
+      if (rememberMe) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const MainNavPage()),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const OnboardingPage()),
+        );
+      }
     });
   }
 

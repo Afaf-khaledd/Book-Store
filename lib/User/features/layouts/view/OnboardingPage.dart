@@ -1,5 +1,5 @@
 import 'package:book_store/User/features/layouts/view/LoginPage.dart';
-import 'package:book_store/User/features/layouts/view/SignUp.dart';
+import 'package:book_store/User/features/layouts/view/SignUpPage.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 

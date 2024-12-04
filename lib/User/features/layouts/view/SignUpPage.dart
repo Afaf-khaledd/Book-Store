@@ -8,6 +8,7 @@ import '../../../core/SharedPreference.dart';
 import '../../../core/Validators.dart';
 import '../../data/models/UserModel.dart';
 import '../manger/AuthCubit/auth_cubit.dart';
+import 'MainNavPage.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -226,6 +227,10 @@ class _SignUpState extends State<SignUp> {
                           uid: '',
                         );
                         context.read<AuthCubit>().signUp(user, _passwordController.text);
+                        Navigator.pushReplacement(context, MaterialPageRoute<void>(
+                          builder: (BuildContext context) => const MainNavPage(),
+                        ),
+                        );
                       }
                     },
                     child: const Text(

@@ -1,3 +1,5 @@
+import 'package:book_store/User/features/layouts/manger/BookCubit/book_cubit.dart';
+import 'package:book_store/User/features/layouts/manger/BookCubit/book_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,6 +27,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<AuthCubit>(
           create: (_) => getIt<AuthCubit>(),
+        ),
+        BlocProvider<BookCubit>(
+          create: (_) => getIt<BookCubit>(),
         ),
       ],
       child: MaterialApp(//.router

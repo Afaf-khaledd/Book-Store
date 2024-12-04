@@ -1,3 +1,4 @@
+import 'package:book_store/User/features/layouts/view/MainNavPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -5,7 +6,7 @@ import '../../../../constant.dart';
 import '../../../core/SharedPreference.dart';
 import '../../../core/Validators.dart';
 import '../manger/AuthCubit/auth_cubit.dart';
-import 'SignUp.dart';
+import 'SignUpPage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -150,6 +151,10 @@ class _LoginPageState extends State<LoginPage> {
                             context.read<AuthCubit>().login(
                               _emailController.text,
                               _passwordController.text,
+                            );
+                            Navigator.pushReplacement(context, MaterialPageRoute<void>(
+                              builder: (BuildContext context) => const MainNavPage(),
+                            ),
                             );
                           }
                         },
