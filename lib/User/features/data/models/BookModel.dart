@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class BookModel {
   String? id;
   String? title;
@@ -9,9 +11,10 @@ class BookModel {
   String? language;
   String? thumbnail;
   String? description;
-  String? price;
+  int? price;
   String? isbn;
   int? availability;
+  int? popularity;
 
   BookModel({
     this.id,
@@ -27,6 +30,7 @@ class BookModel {
     this.price,
     this.isbn,
     this.availability,
+    this.popularity,
   });
 
   BookModel.fromJson(Map<String, dynamic> json) {
@@ -41,10 +45,15 @@ class BookModel {
     thumbnail = json['volumeInfo']['imageLinks']?['thumbnail'];
     description = json['volumeInfo']['description'];
     availability = 10;
-    price = json['saleInfo']['listPrice']?['amount']?.toString();
+    price = (json['saleInfo']['listPrice']?['amount'] as num?)?.toInt();
     isbn = json['volumeInfo']['industryIdentifiers']?.firstWhere(
-            (identifier) => identifier['type'] == 'ISBN_13' || identifier['type'] == 'ISBN_10', orElse: () => {})['identifier'];
+          (identifier) =>
+      identifier['type'] == 'ISBN_13' || identifier['type'] == 'ISBN_10',
+      orElse: () => {},
+    )['identifier'];
+    popularity = Random().nextInt(5) + 1;
   }
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -60,6 +69,7 @@ class BookModel {
       'price': price,
       'isbn': isbn,
       'availability': availability,
+      'popularity': popularity,
     };
   }
 }

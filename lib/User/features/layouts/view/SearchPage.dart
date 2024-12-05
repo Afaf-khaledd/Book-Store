@@ -5,6 +5,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import '../../../../constant.dart';
+import 'BookDetailsPage.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -171,33 +172,40 @@ class _SearchPageState extends State<SearchPage> {
                       final price = book['price'] ?? 'Free';
                       final img = book['thumbnail'] ?? '';
 
-                      return Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(14),
-                          child: ListTile(
-                            leading: SizedBox(
-                              width: 60,  // Increase the width of the image
-                              height: 90,  // Increase the height of the image
-                              child: Image.network(
-                                img,
-                                fit: BoxFit.fill,  // Adjust the BoxFit to ensure the image scales correctly
+                      return InkWell(
+                        onTap: (){
+                        /*Navigator.push(context, MaterialPageRoute<void>(
+                          builder: (BuildContext context) => BookDetailsPage(book: ),
+                        ),);*/
+                      },
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(14),
+                            child: ListTile(
+                              leading: SizedBox(
+                                width: 60,
+                                height: 90,
+                                child: Image.network(
+                                  img,
+                                  fit: BoxFit.fill,
+                                ),
                               ),
-                            ),
-                            title: Text(
-                              title,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                              title: Text(
+                                title,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            subtitle: Text(
-                              "Author: $author",
-                              style: const TextStyle(
-                                  fontSize: 14, color: Colors.grey),
-                            ),
-                            trailing: Text(
-                              "Price: $price",
-                              style: const TextStyle(fontSize: 16),
+                              subtitle: Text(
+                                "Author: $author",
+                                style: const TextStyle(
+                                    fontSize: 14, color: Colors.grey),
+                              ),
+                              trailing: Text(
+                                "Price: $price",
+                                style: const TextStyle(fontSize: 16),
+                              ),
                             ),
                           ),
                         ),

@@ -16,4 +16,8 @@ final class BookError extends BookState {
   final String error;
   BookError(this.error);
 }
-
+class CategoryBooksLoaded extends BookState {
+  final List<BookModel> books;
+  final String category;
+  CategoryBooksLoaded(this.books, this.category);
+}

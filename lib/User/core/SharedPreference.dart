@@ -13,14 +13,4 @@ class SharedPreference{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool('rememberMe') ?? false;
   }
-
-  Future<void> setDataLoaded(bool value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('dataLoaded', value);
-  }
-
-  Future<bool> getDataLoaded() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('dataLoaded') ?? false;
-  }
 }

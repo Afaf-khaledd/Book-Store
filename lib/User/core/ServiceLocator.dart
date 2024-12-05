@@ -11,4 +11,5 @@ void setupServiceLocator() {
   getIt.registerFactory<AuthCubit>(() => AuthCubit(getIt<AuthRepository>()));
   getIt.registerLazySingleton<BooksRepository>(() => BooksRepository.instance);
   getIt.registerFactory<BookCubit>(() => BookCubit(getIt<BooksRepository>()));
+
 }

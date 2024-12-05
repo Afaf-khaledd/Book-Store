@@ -1,9 +1,11 @@
 import 'package:book_store/User/features/layouts/view/CategoriesPage.dart';
 import 'package:book_store/User/features/layouts/view/SettingPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 import '../../../../constant.dart';
+import '../manger/BookCubit/book_cubit.dart';
 import 'CartPage.dart';
 import 'HomePage.dart';
 
@@ -64,6 +66,19 @@ class _MainNavPageState extends State<MainNavPage> {
       screens: _buildScreens(),
       items: _navBarsItems(),
       navBarStyle: NavBarStyle.style1,
+      onItemSelected: (index) {
+        // Ensure HomePage is refreshed when tab is selected
+        if (index == 0) {
+          // Trigger a re-fetch of books when the Home tab is selected
+          context.read<BookCubit>().initializeBooks();
+        }
+        else if (index == 2) {
+          context.read<BookCubit>().fetchBooksByCategory("fiction");
+        }
+        setState(() {
+          _controller.index = index;
+        });
+      },
     );
   }
 }
