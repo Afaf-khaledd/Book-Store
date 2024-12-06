@@ -1,4 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:book_store/User/core/SharedPreference.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 
 import '../../../data/models/UserModel.dart';
@@ -20,7 +22,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthError("Failed to login: $e"));
     }
   }
-
+  Future<UserModel?> get currentUser => authRepository.currentUser;
   Future<void> signUp(UserModel user, String password) async {
     emit(AuthLoading());
     try {
@@ -39,17 +41,35 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthResetPasswordError(e.toString()));
     }
   }
+  Future<void> changePassword(String newPassword) async {
+    try {
+      final user = await authRepository.currentUser;
+
+      if (user != null) {
+
+        await FirebaseAuth.instance.currentUser!.updatePassword(newPassword);
+
+        emit(AuthPasswordChangeSuccess());
+      } else {
+        emit(AuthError('No user is logged in.'));
+      }
+    } catch (e) {
+      emit(AuthPasswordChangeError('Failed to change password: $e'));
+    }
+  }
+
 
   Future<void> logout() async {
     emit(AuthLoading());
     try {
       await authRepository.logout();
       emit(AuthLogoutSuccess());
+      SharedPreference.instance.setRememberMe(false);
     } catch (e) {
       emit(AuthLogoutError("Failed to logout: $e"));
     }
   }
-  /*Future<void> loginWithGoogle() async {
+  Future<void> loginWithGoogle() async {
     emit(AuthLoading());
     try {
       final user = await authRepository.loginWithGoogle();
@@ -61,19 +81,5 @@ class AuthCubit extends Cubit<AuthState> {
     } catch (e) {
       emit(AuthError("Google login failed: $e"));
     }
-  }*/
-
-  /*Future<void> loginWithFacebook() async {
-    emit(AuthLoading());
-    try {
-      final user = await authRepository.loginWithFacebook();
-      if (user != null) {
-        emit(AuthSuccess("Facebook login successful!"));
-      } else {
-        emit(AuthError("Facebook login canceled."));
-      }
-    } catch (e) {
-      emit(AuthError("Facebook login failed: $e"));
-    }
-  }*/
+  }
 }

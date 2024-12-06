@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:book_store/User/features/data/repoistry/FavoritesRepository.dart';
 import '../../../data/models/BookModel.dart';
 import '../../../data/models/BookSortingStrategy.dart';
 import '../../../data/repoistry/ProxyBooksRepository.dart';
@@ -9,10 +9,12 @@ part 'book_state.dart';
 
 class BookCubit extends Cubit<BookState> {
   final ProxyBooksRepository bookRepository;
+  final FavoritesRepository _favoritesRepository;
   final BookSorter bookSorter = BookSorter();
   List<BookModel> _books = [];
 
-  BookCubit(this.bookRepository) : super(BookInitial());
+
+  BookCubit(this.bookRepository, this._favoritesRepository) : super(BookInitial());
 
   Future<void> initializeBooks() async {
     emit(BookLoading());

@@ -253,7 +253,7 @@ class _SignUpState extends State<SignUp> {
                     InkWell(
                       child: Image.asset('images/google.png', width: 50),
                       onTap: () {
-                       // context.read<AuthCubit>().loginWithGoogle();
+                        context.read<AuthCubit>().loginWithGoogle();
                       },
                     ),
                   ],

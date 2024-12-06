@@ -178,7 +178,7 @@ class _LoginPageState extends State<LoginPage> {
                         InkWell(
                           child: Image.asset('images/google.png', width: 50),
                           onTap: () {
-                           // context.read<AuthCubit>().loginWithGoogle();
+                           context.read<AuthCubit>().loginWithGoogle();
                           },
                         ),
                       ],

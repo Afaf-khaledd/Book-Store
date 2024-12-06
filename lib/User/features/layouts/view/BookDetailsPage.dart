@@ -1,8 +1,14 @@
 import 'package:book_store/User/features/data/models/BookModel.dart';
 import 'package:flutter/material.dart';
 
+import '../manger/BookCubit/book_cubit.dart';
+
 class BookDetailsPage extends StatefulWidget {
-  const BookDetailsPage({super.key, required this.book});
+  const BookDetailsPage({
+    super.key,
+    required this.book,
+  });
+
   final BookModel book;
 
   @override
@@ -10,42 +16,44 @@ class BookDetailsPage extends StatefulWidget {
 }
 
 class _BookDetailsPageState extends State<BookDetailsPage> {
-  bool _isFavorite = false;
   bool _inCart = false;
+  late bool _isFavorite;
+
+  @override
+  void initState() {
+    super.initState();
+    _isFavorite = false;
+  }
 
   @override
   Widget build(BuildContext context) {
     final book = widget.book;
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Book Details'),
-          toolbarHeight: 80,
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-          actions: [
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  _isFavorite = !_isFavorite;
-                });
-              },
-              icon: Icon(
-                _isFavorite ? Icons.favorite : Icons.favorite_border_rounded,
-                color: Colors.redAccent,
-              ),
+        title: const Text('Book Details'),
+        toolbarHeight: 80,
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        actions: [
+          IconButton(
+            onPressed: (){},
+            icon: Icon(
+              _isFavorite ? Icons.favorite : Icons.favorite_border_rounded,
+              color: Colors.redAccent,
             ),
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  _inCart = !_inCart;
-                });
-              },
-              icon: Icon(
-                _inCart ? Icons.shopping_cart_rounded : Icons.shopping_cart_outlined,
-                color: Colors.orangeAccent,
-              ),
+          ),
+          IconButton(
+            onPressed: () {
+              setState(() {
+                _inCart = !_inCart;
+              });
+            },
+            icon: Icon(
+              _inCart ? Icons.shopping_cart_rounded : Icons.shopping_cart_outlined,
+              color: Colors.orangeAccent,
             ),
-          ]
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -65,7 +73,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
             ),
             const SizedBox(height: 22),
             Text(
-              book.title?? 'No Title',
+              book.title ?? 'No Title',
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -85,7 +93,10 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                 ),
                 Row(
                   children: [
-                    Text('${book.popularity}',style: const TextStyle(fontSize: 20),),
+                    Text(
+                      '${book.popularity}',
+                      style: const TextStyle(fontSize: 20),
+                    ),
                     const Icon(
                       Icons.star_rate_rounded,
                       color: Colors.amber,
@@ -95,7 +106,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                 ),
               ],
             ),
-            const SizedBox(height: 13,),
+            const SizedBox(height: 13),
             Text(
               '${book.price?.toStringAsFixed(2) ?? '0.00'}\$',
               style: const TextStyle(
@@ -146,7 +157,6 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                     height: 50,
                     color: Colors.grey.withOpacity(0.5),
                   ),
-
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -170,7 +180,6 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                     height: 50,
                     color: Colors.grey.withOpacity(0.5),
                   ),
-
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -204,7 +213,9 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
             Text(
               book.description ?? 'No description available.',
               style: const TextStyle(fontSize: 16),
-              textAlign: TextAlign.center,maxLines: 8,overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              maxLines: 8,
+              overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 32),
           ],

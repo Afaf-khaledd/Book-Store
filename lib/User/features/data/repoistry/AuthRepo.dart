@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../models/UserModel.dart';
 
@@ -16,7 +15,31 @@ class AuthRepository {
     );
     return credential.user;
   }
+  Future<UserModel?> get currentUser async{
+    User? firebaseUser = _auth.currentUser;
 
+    if (firebaseUser == null) {
+      return null;
+    }
+    try {
+      DocumentSnapshot doc = await _firestore.collection('users').doc(firebaseUser.uid).get();
+
+      if (doc.exists) {
+        return UserModel(
+          uid: firebaseUser.uid,
+          email: firebaseUser.email ?? '',
+          username: doc['username'] ?? '',
+          phone: doc['phone'] ?? '',
+          address: doc['address'] ?? '',
+          birthday: doc['birthday'] ?? '',
+        );
+      }
+    } catch (e) {
+      print("Error fetching user data: $e");
+    }
+
+    return null;
+  }
   Future<User?> signUp(UserModel userModel, String password) async {
     UserCredential credential = await _auth.createUserWithEmailAndPassword(
       email: userModel.email,
@@ -36,7 +59,7 @@ class AuthRepository {
   Future<void> logout() async {
     await _auth.signOut();
   }
-  /*Future<User?> loginWithGoogle() async {
+  Future<User?> loginWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       if (googleUser == null) return null;
@@ -62,31 +85,5 @@ class AuthRepository {
     } catch (e) {
       rethrow;
     }
-  }*/
-
-  /*Future<User?> loginWithFacebook() async {
-    try {
-      final LoginResult result = await FacebookAuth.instance.login(permissions: ['email', 'public_profile']);
-      if (result.status == LoginStatus.success) {
-        final AuthCredential credential =
-        FacebookAuthProvider.credential(result.accessToken!.token);
-
-        UserCredential userCredential = await _auth.signInWithCredential(credential);
-
-        if (userCredential.additionalUserInfo!.isNewUser) {
-          await _firestore.collection('users').doc(userCredential.user!.uid).set({
-            'uid': userCredential.user!.uid,
-            'email': userCredential.user!.email,
-            'username': userCredential.user!.displayName,
-            'phone': userCredential.user!.phoneNumber,
-          });
-        }
-
-        return userCredential.user;
-      }
-      return null;
-    } catch (e) {
-      rethrow;
-    }
-  }*/
+  }
 }

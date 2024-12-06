@@ -107,7 +107,9 @@ class _CategoriesPageState extends State<CategoriesPage> {
                       itemCount: books.length,
                       itemBuilder: (context, index) {
                         final book = books[index];
-                        return BookCard(book: book);
+                        return BookCard(
+                          book: book,
+                        );
                       },
                     ),
                   );

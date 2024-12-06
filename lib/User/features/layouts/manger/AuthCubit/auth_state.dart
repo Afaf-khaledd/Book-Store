@@ -24,3 +24,8 @@ class AuthLogoutError extends AuthState {
   final String error;
   AuthLogoutError(this.error);
 }
+class AuthPasswordChangeSuccess extends AuthState {}
+class AuthPasswordChangeError extends AuthState {
+  final String message;
+  AuthPasswordChangeError(this.message);
+}

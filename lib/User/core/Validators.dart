@@ -19,6 +19,7 @@ class Validators {
     }
     return null;
   }
+
   static String? validatePhone(String? value) {
     if (value == null || value.isEmpty) {
       return "Phone is required";
@@ -28,4 +29,12 @@ class Validators {
     }
     return null;
   }
+
+  static String? validateNotEmpty(String? value){
+    if (value == null || value.isEmpty) {
+      return 'Please enter your username';
+    }
+    return null;
+  }
+
 }

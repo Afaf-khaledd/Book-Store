@@ -23,10 +23,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    // Fetch books only once during initialization
     context.read<BookCubit>().initializeBooks();
   }
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -160,14 +158,17 @@ class _HomePageState extends State<HomePage> {
                   final books = state.books;
                   return Expanded(
                     child: GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                      const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         childAspectRatio: 0.75,
                       ),
                       itemCount: books.length,
                       itemBuilder: (context, index) {
                         final book = books[index];
-                        return BookCard(book: book);
+                        return BookCard(
+                          book: book,
+                        );
                       },
                     ),
                   );
