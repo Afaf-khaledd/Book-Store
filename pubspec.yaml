@@ -50,6 +50,7 @@ dependencies:
   speech_to_text: ^7.0.0
   flutter_barcode_scanner: ^2.0.0
   permission_handler: ^11.3.1
+  fluttertoast:
 
 
 dev_dependencies:

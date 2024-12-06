@@ -23,8 +23,10 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    // Fetch books only once during initialization
     context.read<BookCubit>().initializeBooks();
   }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();

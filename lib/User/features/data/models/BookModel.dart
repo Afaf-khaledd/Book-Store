@@ -7,7 +7,6 @@ class BookModel {
   String? publisher;
   String? publishedDate;
   String? category;
-  int? pageCount;
   String? language;
   String? thumbnail;
   String? description;
@@ -23,7 +22,6 @@ class BookModel {
     this.publisher,
     this.publishedDate,
     this.category,
-    this.pageCount,
     this.language,
     this.thumbnail,
     this.description,
@@ -35,22 +33,21 @@ class BookModel {
 
   BookModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    title = json['volumeInfo']['title'];
-    authors = json['volumeInfo']['authors']?.cast<String>();
-    publisher = json['volumeInfo']['publisher'];
-    publishedDate = json['volumeInfo']['publishedDate'];
-    category = (json['volumeInfo']['categories'] as List?)?.first;
-    pageCount = json['volumeInfo']['pageCount'];
-    language = json['volumeInfo']['language'];
-    thumbnail = json['volumeInfo']['imageLinks']?['thumbnail'];
-    description = json['volumeInfo']['description'];
-    availability = 10;
-    price = (json['saleInfo']['listPrice']?['amount'] as num?)?.toInt();
-    isbn = json['volumeInfo']['industryIdentifiers']?.firstWhere(
-          (identifier) =>
-      identifier['type'] == 'ISBN_13' || identifier['type'] == 'ISBN_10',
+    title = json['volumeInfo']?['title'] ?? json['title'];
+    authors = (json['volumeInfo']?['authors'] ?? json['authors'])?.cast<String>();
+    publisher = json['volumeInfo']?['publisher'] ?? json['publisher'];
+    publishedDate = json['volumeInfo']?['publishedDate'] ?? json['publishedDate'];
+    category = (json['volumeInfo']?['categories'] ?? [json['category']]).first;
+    language = json['volumeInfo']?['language'] ?? json['language'];
+    thumbnail = json['volumeInfo']?['imageLinks']?['thumbnail'] ?? json['thumbnail'];
+    description = json['volumeInfo']?['description'] ?? json['description'];
+    price = (json['saleInfo']?['listPrice']?['amount'] as num?)?.toInt() ??
+        Random().nextInt(500) + 1;
+    isbn = json['volumeInfo']?['industryIdentifiers']?.firstWhere(
+          (identifier) => identifier['type'] == 'ISBN_13' || identifier['type'] == 'ISBN_10',
       orElse: () => {},
-    )['identifier'];
+    )['identifier'] ?? json['isbn'];
+    availability = Random().nextInt(50) + 1;
     popularity = Random().nextInt(5) + 1;
   }
 
@@ -62,7 +59,6 @@ class BookModel {
       'publisher': publisher,
       'publishedDate': publishedDate,
       'category': category,
-      'pageCount': pageCount,
       'language': language,
       'thumbnail': thumbnail,
       'description': description,
