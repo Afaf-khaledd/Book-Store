@@ -15,12 +15,10 @@ class BookCard extends StatefulWidget {
 }
 
 class _BookCardState extends State<BookCard> {
-  late bool _isFavorite;
 
   @override
   void initState() {
     super.initState();
-    _isFavorite = false;
   }
 
   @override
@@ -75,15 +73,12 @@ class _BookCardState extends State<BookCard> {
                           ),
                         ),
                       ),
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            _isFavorite = !_isFavorite;
-                          });
-                        },
-                        icon: Icon(
-                          _isFavorite ? Icons.favorite : Icons.favorite_border_rounded,
-                          color: Colors.redAccent,
+                      Text(
+                        '\$${widget.book.price ?? "Free"}',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
                         ),
                       ),
                     ],

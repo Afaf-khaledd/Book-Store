@@ -1,4 +1,3 @@
-import 'package:book_store/User/features/layouts/view/FavoritePage.dart';
 import 'package:book_store/User/features/layouts/view/SearchPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,31 +40,17 @@ class _HomePageState extends State<HomePage> {
         toolbarHeight: 80,
         backgroundColor: Colors.transparent,
         actions: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute<void>(
-                      builder: (BuildContext context) => const FavoritePage(),
-                    ),
-                    );
-                  },
-                  icon: const Icon(Icons.favorite,color: Colors.redAccent,)
-              ),
-              IconButton(
-                  onPressed: (){
-                    // to notification page
-                    Navigator.push(context, MaterialPageRoute<void>(
-                      builder: (BuildContext context) => const NotificationPage(),
-                    ),
-                    );
-                  },
-                  icon: const Icon(Icons.notifications,color: mainGreenColor,)
-              ),
-              const SizedBox(width: 10,)
-            ],
-          )
+          IconButton(
+              onPressed: (){
+                // to notification page
+                Navigator.push(context, MaterialPageRoute<void>(
+                  builder: (BuildContext context) => const NotificationPage(),
+                ),
+                );
+              },
+              icon: const Icon(Icons.notifications,color: mainGreenColor,)
+          ),
+          const SizedBox(width: 10,)
         ],
       ),
       body: Padding(

@@ -1,5 +1,7 @@
 import 'package:book_store/User/features/layouts/manger/BookCubit/book_cubit.dart';
-import 'package:book_store/User/features/layouts/manger/BookCubit/book_cubit.dart';
+import 'package:book_store/User/features/layouts/manger/CartCubit/cart_cubit.dart';
+import 'package:book_store/User/features/layouts/manger/ReviewCubit/review_cubit.dart';
+import 'package:book_store/User/features/layouts/manger/ReviewCubit/review_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,6 +32,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<BookCubit>(
           create: (_) => getIt<BookCubit>(),
+        ),
+        BlocProvider<CartCubit>(
+          create: (_) => getIt<CartCubit>(),
+        ),
+        BlocProvider<ReviewCubit>(
+          create: (_) => getIt<ReviewCubit>(),
         ),
       ],
       child: MaterialApp(//.router

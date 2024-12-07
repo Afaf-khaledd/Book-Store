@@ -2,10 +2,13 @@ import 'package:book_store/User/features/data/repoistry/BooksRepo.dart';
 import 'package:book_store/User/features/layouts/manger/BookCubit/book_cubit.dart';
 import 'package:get_it/get_it.dart';
 import '../features/data/repoistry/AuthRepo.dart';
-import '../features/data/repoistry/FavoritesRepository.dart';
+import '../features/data/repoistry/CartRepo.dart';
 import '../features/data/repoistry/ProxyBooksRepository.dart';
 import '../features/data/repoistry/RealBooksRepository.dart';
+import '../features/data/repoistry/ReviewRepo.dart';
 import '../features/layouts/manger/AuthCubit/auth_cubit.dart';
+import '../features/layouts/manger/CartCubit/cart_cubit.dart';
+import '../features/layouts/manger/ReviewCubit/review_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -17,12 +20,13 @@ void setupServiceLocator() {
   getIt.registerLazySingleton<ProxyBooksRepository>(
           () => ProxyBooksRepository(getIt<BooksRepository>()));
 
-  // Favorites Repository
-  getIt.registerLazySingleton<FavoritesRepository>(() => FavoritesRepository());
 
-  // Book Cubit (with ProxyBooksRepository and FavoritesRepository)
-  getIt.registerFactory<BookCubit>(() => BookCubit(
-    getIt<ProxyBooksRepository>(),
-    getIt<FavoritesRepository>(),
-  ));
+  getIt.registerFactory<BookCubit>(() => BookCubit(getIt<ProxyBooksRepository>()));
+
+  getIt.registerLazySingleton<CartRepository>(() => CartRepository());
+  getIt.registerFactory<CartCubit>(() => CartCubit(getIt<CartRepository>()));
+
+  getIt.registerLazySingleton<ReviewRepository>(() => ReviewRepository());
+  getIt.registerFactory<ReviewCubit>(() => ReviewCubit(getIt<ReviewRepository>()));
+
 }

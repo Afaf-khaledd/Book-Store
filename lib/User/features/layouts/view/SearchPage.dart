@@ -5,6 +5,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import '../../../../constant.dart';
+import '../../data/models/BookModel.dart';
 import 'BookDetailsPage.dart';
 
 class SearchPage extends StatefulWidget {
@@ -155,7 +156,8 @@ class _SearchPageState extends State<SearchPage> {
                     return title.contains(searchQuery) ||
                         authors.contains(searchQuery) ||
                         isbn.contains(searchQuery);
-                  }).toList();
+                  }).map((doc) => BookModel.fromJson(doc.data() as Map<String, dynamic>))
+                      .toList();
 
                   if (books.isEmpty) {
                     return const Center(
@@ -167,16 +169,16 @@ class _SearchPageState extends State<SearchPage> {
                     itemCount: books.length,
                     itemBuilder: (context, index) {
                       final book = books[index];
-                      final title = book['title'] ?? 'Unknown Title';
-                      final author = book['authors'] ?? 'Unknown Author';
-                      final price = book['price'] ?? 'Free';
-                      final img = book['thumbnail'] ?? '';
+                      final title = book.title ?? 'Unknown Title';
+                      final author = book.authors ?? 'Unknown Author';
+                      final price = book.price ?? 'Free';
+                      final img = book.thumbnail ?? '';
 
                       return InkWell(
                         onTap: (){
-                        /*Navigator.push(context, MaterialPageRoute<void>(
-                          builder: (BuildContext context) => BookDetailsPage(book: ),
-                        ),);*/
+                        Navigator.push(context, MaterialPageRoute<void>(
+                          builder: (BuildContext context) => BookDetailsPage(book: book),
+                        ),);
                       },
                         child: Card(
                           child: Padding(

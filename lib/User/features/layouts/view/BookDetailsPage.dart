@@ -1,7 +1,13 @@
 import 'package:book_store/User/features/data/models/BookModel.dart';
+import 'package:book_store/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../manger/BookCubit/book_cubit.dart';
+import '../../data/models/CartItemModel.dart';
+import '../../data/models/ReviewModel.dart';
+import '../manger/AuthCubit/auth_cubit.dart';
+import '../manger/CartCubit/cart_cubit.dart';
+import '../manger/ReviewCubit/review_cubit.dart';
 
 class BookDetailsPage extends StatefulWidget {
   const BookDetailsPage({
@@ -17,12 +23,25 @@ class BookDetailsPage extends StatefulWidget {
 
 class _BookDetailsPageState extends State<BookDetailsPage> {
   bool _inCart = false;
-  late bool _isFavorite;
+  final TextEditingController _reviewController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _isFavorite = false;
+    final user = BlocProvider.of<AuthCubit>(context).cachedUser;
+
+    final reviewCubit = BlocProvider.of<ReviewCubit>(context);
+    reviewCubit.loadReviews(widget.book.id!);
+
+    if (user != null) {
+      BlocProvider.of<CartCubit>(context)
+          .isInCart(user.uid, widget.book.id!)
+          .then((isInCart) {
+        setState(() {
+          _inCart = isInCart;
+        });
+      });
+    }
   }
 
   @override
@@ -36,23 +55,40 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
         backgroundColor: Colors.transparent,
         actions: [
           IconButton(
-            onPressed: (){},
-            icon: Icon(
-              _isFavorite ? Icons.favorite : Icons.favorite_border_rounded,
-              color: Colors.redAccent,
-            ),
-          ),
-          IconButton(
-            onPressed: () {
+            onPressed: () async {
+              final user = await BlocProvider.of<AuthCubit>(context).currentUser;
+              final previousState = _inCart;
               setState(() {
                 _inCart = !_inCart;
               });
+              try {
+                if (previousState) {
+                  await BlocProvider.of<CartCubit>(context).removeFromCart(user!.uid, book.id!);
+                } else {
+                  final item = CartItemModel(
+                    bookId: book.id!,
+                    title: book.title!,
+                    image: book.thumbnail!,
+                    price: book.price!,
+                    quantity: 1,
+                  );
+                  await BlocProvider.of<CartCubit>(context).addToCart(user!.uid, item);
+                }
+              } catch (e) {
+                setState(() {
+                  _inCart = previousState;
+                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Failed to update cart: $e')),
+                );
+              }
             },
             icon: Icon(
               _inCart ? Icons.shopping_cart_rounded : Icons.shopping_cart_outlined,
               color: Colors.orangeAccent,
             ),
           ),
+          const SizedBox(width: 10,),
         ],
       ),
       body: SingleChildScrollView(
@@ -86,7 +122,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                 Text(
                   '${book.authors}',
                   style: const TextStyle(
-                    fontSize: 18,
+                    fontSize: 13,
                     fontStyle: FontStyle.italic,
                     color: Colors.grey,
                   ),
@@ -218,9 +254,182 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
               overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 32),
+
+            const Text(
+              'Reviews',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 8),
+
+            BlocBuilder<ReviewCubit, ReviewState>(
+              builder: (context, state) {
+                if (state is ReviewLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is ReviewLoaded) {
+                  final reviews = state.reviews;
+                  if (reviews.isEmpty) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.reviews_outlined,
+                          size: 100,
+                          color: Colors.grey.shade400,
+                        ),
+                        const SizedBox(height: 16),
+                        const Text(
+                          'No Reviews Yet!',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black54,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        const Text(
+                          'Be the first to share your thoughts on this book.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black45,
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                      ],
+                    );
+                  }
+                  return Column(
+                    children: reviews.map((review) {
+                      return Container(
+                        width: double.infinity,
+                        margin: const EdgeInsets.symmetric(vertical: 8),
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              blurRadius: 6,
+                              spreadRadius: 2,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              review.username,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              review.review,
+                              style: const TextStyle(fontSize: 14, color: Colors.black87),
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  );
+                } else if (state is ReviewError) {
+                  return Center(
+                    child: Text(
+                      state.message,
+                      style: const TextStyle(color: Colors.red, fontSize: 16),
+                    ),
+                  );
+                } else {
+                  return const SizedBox.shrink();
+                }
+              },
+            ),
+            const SizedBox(height: 24),
+
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                //color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    blurRadius: 6,
+                    spreadRadius: 2,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Write a Review',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: _reviewController,
+                    maxLines: 3,
+                    decoration: InputDecoration(
+                      hintText: 'Share your thoughts...',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        final user = BlocProvider.of<AuthCubit>(context).cachedUser;
+                        final reviewText = _reviewController.text.trim();
+                        if (user != null && reviewText.isNotEmpty) {
+                          final review = ReviewModel(
+                            username: user.email ?? 'Anonymous',
+                            review: reviewText,
+                            bookId: widget.book.id!,
+                          );
+                          BlocProvider.of<ReviewCubit>(context).submitReview(review).then((_) {
+                            _reviewController.clear();
+                            BlocProvider.of<ReviewCubit>(context).loadReviews(widget.book.id!);
+                          });
+                        }
+                      },
+                      icon: const Icon(Icons.send,color: Colors.white,),
+                      label: const Text('Submit',style: TextStyle(color: Colors.white),),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: mainGreenColor,
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _reviewController.dispose();
+    super.dispose();
   }
 }

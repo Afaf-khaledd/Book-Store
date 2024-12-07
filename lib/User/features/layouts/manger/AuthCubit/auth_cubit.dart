@@ -10,23 +10,31 @@ part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final AuthRepository authRepository;
+  UserModel? _cachedUser;
 
   AuthCubit(this.authRepository) : super(AuthInitial());
+
+  Future<UserModel?> get currentUser async {
+    _cachedUser ??= await authRepository.currentUser;
+    return _cachedUser;
+  }
+  UserModel? get cachedUser => _cachedUser;
 
   Future<void> login(String email, String password) async {
     emit(AuthLoading());
     try {
       await authRepository.login(email, password);
+      _cachedUser = await authRepository.currentUser;
       emit(AuthSuccess("Login successful!"));
     } catch (e) {
       emit(AuthError("Failed to login: $e"));
     }
   }
-  Future<UserModel?> get currentUser => authRepository.currentUser;
   Future<void> signUp(UserModel user, String password) async {
     emit(AuthLoading());
     try {
       await authRepository.signUp(user, password);
+      _cachedUser = await authRepository.currentUser;
       emit(AuthSuccess("Sign up successful!"));
     } catch (e) {
       emit(AuthError("Failed to sign up: $e"));
@@ -57,7 +65,6 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthPasswordChangeError('Failed to change password: $e'));
     }
   }
-
 
   Future<void> logout() async {
     emit(AuthLoading());

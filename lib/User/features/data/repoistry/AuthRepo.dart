@@ -15,6 +15,7 @@ class AuthRepository {
     );
     return credential.user;
   }
+
   Future<UserModel?> get currentUser async{
     User? firebaseUser = _auth.currentUser;
 

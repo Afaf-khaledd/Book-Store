@@ -1,13 +1,13 @@
 import 'package:book_store/User/features/layouts/view/AboutAppPage.dart';
 import 'package:book_store/User/features/layouts/view/CartPage.dart';
 import 'package:book_store/User/features/layouts/view/EditProfilePage.dart';
-import 'package:book_store/User/features/layouts/view/FavoritePage.dart';
 import 'package:book_store/User/features/layouts/view/OnboardingPage.dart';
 import 'package:book_store/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../manger/AuthCubit/auth_cubit.dart';
+import 'OrderHistoryPage.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -41,17 +41,7 @@ class _SettingPageState extends State<SettingPage> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const CartPage()),
-          );
-        },
-      ),
-      _MenuItem(
-        title: 'Wishlist',
-        icon: Icons.favorite,
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const FavoritePage()),
+            MaterialPageRoute(builder: (context) => const OrderHistoryPage()),
           );
         },
       ),
