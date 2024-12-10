@@ -1,4 +1,4 @@
-import 'package:book_store/Admin/Dashboard.dart';
+import 'package:book_store/Admin/features/layouts/view/Dashboard.dart';
 import 'package:book_store/User/features/layouts/view/MainNavPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -154,11 +154,13 @@ class _LoginPageState extends State<LoginPage> {
                               _passwordController.text,
                             );
                             if(_emailController.text.compareTo("admin@store.com")==0 && _passwordController.text.compareTo("admin1")==0){
+                              _isAdmin(true);
                               Navigator.pushReplacement(context, MaterialPageRoute<void>(
                                 builder: (BuildContext context) => const DashboardPage(),
                               ),
                               );
                             }else{
+                              _isAdmin(false);
                             Navigator.pushReplacement(context, MaterialPageRoute<void>(
                               builder: (BuildContext context) => const MainNavPage(),
                             ),
@@ -230,6 +232,12 @@ class _LoginPageState extends State<LoginPage> {
       _rememberMe = value;
     });
     await SharedPreference.instance.setRememberMe(value);
+  }
+  void _isAdmin(bool value) async {
+    setState(() {
+      isAdmin = value;
+    });
+    await SharedPreference.instance.setIsAdmin(value);
   }
 
   void _resetPassword() {

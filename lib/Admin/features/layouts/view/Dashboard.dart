@@ -1,3 +1,4 @@
+import 'package:book_store/Admin/features/layouts/view/DrawerWidget.dart';
 import 'package:flutter/material.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -8,8 +9,15 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+      ),
+      body: const Center(),
+      drawer: const DrawerWidget(),
+    );
   }
 }

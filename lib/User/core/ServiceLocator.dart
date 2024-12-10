@@ -1,3 +1,12 @@
+import 'package:book_store/Admin/features/data/repoistry/BooksAdminRepo.dart';
+import 'package:book_store/Admin/features/data/repoistry/BooksAdminRepo.dart';
+import 'package:book_store/Admin/features/data/repoistry/BooksAdminRepo.dart';
+import 'package:book_store/Admin/features/data/repoistry/CategoryRepository.dart';
+import 'package:book_store/Admin/features/data/repoistry/CategoryRepository.dart';
+import 'package:book_store/Admin/features/data/repoistry/CategoryRepository.dart';
+import 'package:book_store/Admin/features/layouts/manger/BooksCubit/books_admin_cubit.dart';
+import 'package:book_store/Admin/features/layouts/manger/BooksCubit/books_admin_cubit.dart';
+import 'package:book_store/Admin/features/layouts/manger/CategoryCubit/category_cubit.dart';
 import 'package:book_store/User/features/data/repoistry/BooksRepo.dart';
 import 'package:book_store/User/features/layouts/manger/BookCubit/book_cubit.dart';
 import 'package:get_it/get_it.dart';
@@ -28,5 +37,11 @@ void setupServiceLocator() {
 
   getIt.registerLazySingleton<ReviewRepository>(() => ReviewRepository());
   getIt.registerFactory<ReviewCubit>(() => ReviewCubit(getIt<ReviewRepository>()));
+
+  getIt.registerLazySingleton<CategoryRepository>(() => CategoryRepository());
+  getIt.registerFactory<CategoryCubit>(() => CategoryCubit(getIt<CategoryRepository>()));
+
+  getIt.registerLazySingleton<BooksAdminRepository>(() => BooksAdminRepository());
+  getIt.registerFactory<BooksAdminCubit>(() => BooksAdminCubit(getIt<BooksAdminRepository>()));
 
 }

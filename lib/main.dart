@@ -1,3 +1,6 @@
+import 'package:book_store/Admin/features/layouts/manger/BooksCubit/books_admin_cubit.dart';
+import 'package:book_store/Admin/features/layouts/manger/BooksCubit/books_admin_cubit.dart';
+import 'package:book_store/Admin/features/layouts/manger/CategoryCubit/category_cubit.dart';
 import 'package:book_store/User/features/layouts/manger/BookCubit/book_cubit.dart';
 import 'package:book_store/User/features/layouts/manger/CartCubit/cart_cubit.dart';
 import 'package:book_store/User/features/layouts/manger/ReviewCubit/review_cubit.dart';
@@ -38,6 +41,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<ReviewCubit>(
           create: (_) => getIt<ReviewCubit>(),
+        ),
+        BlocProvider<CategoryCubit>(
+          create: (_) => getIt<CategoryCubit>()..fetchCategories(),
+        ),
+        BlocProvider<BooksAdminCubit>(
+          create: (_) => getIt<BooksAdminCubit>()..fetchBooks(),
         ),
       ],
       child: MaterialApp(//.router

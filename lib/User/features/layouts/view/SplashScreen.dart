@@ -1,3 +1,4 @@
+import 'package:book_store/Admin/features/layouts/view/Dashboard.dart';
 import 'package:book_store/User/features/layouts/view/OnboardingPage.dart';
 import 'package:flutter/material.dart';
 
@@ -51,12 +52,21 @@ class _SplashPageState extends State<SplashPage> {
   }
   void navigateToHome() async{
     bool rememberMe = await SharedPreference.instance.getRememberMe();
+    bool isAdmin = await SharedPreference.instance.getIsAdmin();
     Future.delayed(const Duration(seconds: 3), () {
       if (rememberMe) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const MainNavPage()),
-        );
+        if(isAdmin){
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const DashboardPage()),
+          );
+        }
+        else{
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const MainNavPage()),
+          );
+        }
       } else {
         Navigator.pushReplacement(
           context,

@@ -15,6 +15,38 @@ class BookModel {
   int? availability;
   int? popularity;
 
+  BookModel copyWith({
+    String? id,
+    String? title,
+    List<String>? authors,
+    String? publisher,
+    String? publishedDate,
+    String? category,
+    String? language,
+    String? thumbnail,
+    String? description,
+    int? price,
+    String? isbn,
+    int? availability,
+    int? popularity,
+  }) {
+    return BookModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      authors: authors ?? this.authors,
+      publisher: publisher ?? this.publisher,
+      publishedDate: publishedDate ?? this.publishedDate,
+      category: category ?? this.category,
+      language: language ?? this.language,
+      thumbnail: thumbnail ?? this.thumbnail,
+      description: description ?? this.description,
+      price: price ?? this.price,
+      isbn: isbn ?? this.isbn,
+      availability: availability ?? this.availability,
+      popularity: popularity ?? this.popularity,
+    );
+  }
+
   BookModel({
     this.id,
     this.title,

@@ -13,4 +13,13 @@ class SharedPreference{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool('rememberMe') ?? false;
   }
+  Future<void> setIsAdmin(bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isAdmin', value);
+  }
+
+  Future<bool> getIsAdmin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isAdmin') ?? false;
+  }
 }
