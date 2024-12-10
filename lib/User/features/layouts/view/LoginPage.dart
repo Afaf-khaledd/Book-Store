@@ -1,3 +1,4 @@
+import 'package:book_store/Admin/Dashboard.dart';
 import 'package:book_store/User/features/layouts/view/MainNavPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
   bool _rememberMe = false;
+  bool isAdmin = false;
 
   @override
   void dispose() {
@@ -37,7 +39,6 @@ class _LoginPageState extends State<LoginPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.message)),
           );
-          // Navigate to home
         } else if (state is AuthError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.error)),
@@ -152,10 +153,17 @@ class _LoginPageState extends State<LoginPage> {
                               _emailController.text,
                               _passwordController.text,
                             );
+                            if(_emailController.text.compareTo("admin@store.com")==0 && _passwordController.text.compareTo("admin1")==0){
+                              Navigator.pushReplacement(context, MaterialPageRoute<void>(
+                                builder: (BuildContext context) => const DashboardPage(),
+                              ),
+                              );
+                            }else{
                             Navigator.pushReplacement(context, MaterialPageRoute<void>(
                               builder: (BuildContext context) => const MainNavPage(),
                             ),
                             );
+                          }
                           }
                         },
                         child: const Text(

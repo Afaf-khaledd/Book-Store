@@ -38,11 +38,16 @@ class _SettingPageState extends State<SettingPage> {
       _MenuItem(
         title: 'My Orders',
         icon: Icons.shopping_bag,
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const OrderHistoryPage()),
-          );
+        onTap: () async{
+          final user = await BlocProvider.of<AuthCubit>(context).currentUser;
+          if (user != null) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const OrderHistoryPage()),
+            );
+          } else {
+            print('No user logged in');
+          }
         },
       ),
       _MenuItem(
