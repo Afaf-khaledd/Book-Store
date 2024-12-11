@@ -7,7 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../User/features/layouts/manger/AuthCubit/auth_cubit.dart';
 import '../../../../User/features/layouts/view/OnboardingPage.dart';
 import '../../../../Admin/features/layouts/view/OrderPage.dart';
+import 'AvailabilityPage.dart';
 import 'Dashboard.dart';
+import 'ReviewsPage.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({super.key});
@@ -75,6 +77,32 @@ class DrawerWidget extends StatelessWidget {
                   ),
                 );
               },
+          ),
+          ListTile(
+            leading: const Icon(Icons.store_rounded),
+            trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+            title: const Text('Availability'),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) => const AvailabilityPage(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.message_rounded),
+            trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+            title: const Text('Reviews'),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) => const ReviewsPage(),
+                ),
+              );
+            },
           ),
           const Divider(),
           ListTile(

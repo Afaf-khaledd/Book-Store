@@ -24,6 +24,7 @@ class BookDetailsPage extends StatefulWidget {
 class _BookDetailsPageState extends State<BookDetailsPage> {
   bool _inCart = false;
   final TextEditingController _reviewController = TextEditingController();
+  int _rating = 0;
 
   @override
   void initState() {
@@ -322,12 +323,30 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              review.username,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  review.username,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      '${review.rating}',
+                                      style: const TextStyle(fontSize: 20),
+                                    ),
+                                    const Icon(
+                                      Icons.star_rate_rounded,
+                                      color: Colors.amber,
+                                      size: 25,
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                             const SizedBox(height: 4),
                             Text(
@@ -389,26 +408,54 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                     ),
                   ),
                   const SizedBox(height: 12),
+                  const Text(
+                    'Rate the Book',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: List.generate(5, (index) {
+                      return IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _rating = index + 1;
+                          });
+                        },
+                        icon: Icon(
+                          index < _rating ? Icons.star : Icons.star_border,
+                          color: Colors.amber,
+                        ),
+                      );
+                    }),
+                  ),
+                  const SizedBox(height: 12),
                   Align(
                     alignment: Alignment.centerRight,
                     child: ElevatedButton.icon(
                       onPressed: () {
                         final user = BlocProvider.of<AuthCubit>(context).cachedUser;
-                        final reviewText = _reviewController.text.trim();
-                        if (user != null && reviewText.isNotEmpty) {
+                        if (user != null && _rating > 0) {
                           final review = ReviewModel(
-                            username: user.email ?? 'Anonymous',
-                            review: reviewText,
+                            username: user.email,
                             bookId: widget.book.id!,
+                            review: _reviewController.text.trim(),
+                            rating: _rating,
                           );
                           BlocProvider.of<ReviewCubit>(context).submitReview(review).then((_) {
                             _reviewController.clear();
+                            setState(() {
+                              _rating = 0;
+                            });
                             BlocProvider.of<ReviewCubit>(context).loadReviews(widget.book.id!);
                           });
                         }
                       },
-                      icon: const Icon(Icons.send,color: Colors.white,),
-                      label: const Text('Submit',style: TextStyle(color: Colors.white),),
+                      icon: const Icon(Icons.send, color: Colors.white),
+                      label: const Text('Submit', style: TextStyle(color: Colors.white)),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: mainGreenColor,
                         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),

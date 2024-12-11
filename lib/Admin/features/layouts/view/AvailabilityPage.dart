@@ -1,22 +1,21 @@
 import 'package:book_store/Admin/features/layouts/view/DrawerWidget.dart';
 import 'package:flutter/material.dart';
 
-class DashboardPage extends StatefulWidget {
-  const DashboardPage({super.key});
+class AvailabilityPage extends StatefulWidget {
+  const AvailabilityPage({super.key});
 
   @override
-  State<DashboardPage> createState() => _DashboardPageState();
+  State<AvailabilityPage> createState() => _AvailabilityPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage> {
-
+class _AvailabilityPageState extends State<AvailabilityPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         toolbarHeight: 80,
-        title: const Text("Dashboard"),
+        title: const Text("Availability"),
       ),
       body: const Center(),
       drawer: const DrawerWidget(),

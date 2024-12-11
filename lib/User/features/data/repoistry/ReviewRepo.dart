@@ -25,6 +25,22 @@ class ReviewRepository {
   Future<void> submitReview(ReviewModel review) async {
     try {
       await _firestore.collection('reviews').add(review.toMap());
+      final reviews = await _firestore
+          .collection('reviews')
+          .where('bookId', isEqualTo: review.bookId)
+          .get();
+
+      if (reviews.docs.isNotEmpty) {
+        final avgRating = reviews.docs
+            .map((doc) => doc.data()['rating'] as int)
+            .reduce((a, b) => a + b) /
+            reviews.docs.length;
+
+        await _firestore
+            .collection('books')
+            .doc(review.bookId)
+            .update({'rating': avgRating.toInt()});
+      }
     } catch (e) {
       throw Exception('Failed to submit review: $e');
     }
