@@ -33,7 +33,9 @@ class OrderModel {
       orderId: map['orderId'],
       userId: map['userId'],
       date: (map['date'] as Timestamp).toDate(),
-      totalCost: map['totalCost'],
+      totalCost: (map['totalCost'] is int) // Handle Firestore double -> int
+          ? map['totalCost'] as int
+          : (map['totalCost'] as double).toInt(),
       status: map['status'],
       items: List<OrderItem>.from(map['items']?.map((item) => OrderItem.fromMap(item)) ?? []),
     );
