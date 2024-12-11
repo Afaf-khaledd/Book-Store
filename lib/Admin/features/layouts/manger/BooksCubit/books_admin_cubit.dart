@@ -43,6 +43,7 @@ class BooksAdminCubit extends Cubit<BooksAdminState> {
     try {
       await bookRepository.updateBook(book);
       fetchBooks();
+      fetchLowStockBooks();
     } catch (e) {
       emit(BookError("Failed to update book"));
     }

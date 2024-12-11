@@ -9,7 +9,7 @@ class OrderRepository{
   Future<List<OrderModel>> fetchAllOrders() async {
     final querySnapshot = await _firestore.collection('orders').get();
     return querySnapshot.docs
-        .map((doc) => OrderModel.fromMap(doc.data() as Map<String, dynamic>))
+        .map((doc) => OrderModel.fromMap(doc.data()))
         .toList();
   }
 
@@ -24,12 +24,45 @@ class OrderRepository{
         .get();
 
     return snapshot.docs
-        .map((doc) => OrderModel.fromMap(doc.data() as Map<String, dynamic>))
+        .map((doc) => OrderModel.fromMap(doc.data()))
         .toList();
   }
 
   Future<void> updateOrderStatus(String orderId, String status) async {
-    await _firestore.collection('orders').doc(orderId).update({'status': status});
+    final orderRef = _firestore.collection('orders').doc(orderId);
+    final orderSnapshot = await orderRef.get();
 
+    if (orderSnapshot.exists) {
+      final orderData = orderSnapshot.data() as Map<String, dynamic>;
+      final items = orderData['items'] as List<dynamic>;
+
+      // Update the order status
+      await orderRef.update({'status': status});
+
+      if (status == 'confirmed') {
+        // Loop through each order item and update the book availability and sales count
+        for (var item in items) {
+          final bookId = item['bookId']; // Assuming each item has a 'bookId'
+          final quantity = item['quantity']; // Assuming each item has a 'quantity' field
+
+          final bookRef = _firestore.collection('books').doc(bookId);
+
+          // Fetch the book document
+          final bookSnapshot = await bookRef.get();
+
+          if (bookSnapshot.exists) {
+            final bookData = bookSnapshot.data() as Map<String, dynamic>;
+            final currentAvailability = bookData['availability'] ?? 0;
+            final currentSalesCount = bookData['saleCount'] ?? 0;
+
+            // Decrease availability by the ordered quantity and increase salesCount by the ordered quantity
+            await bookRef.update({
+              'availability': currentAvailability - quantity,
+              'saleCount': currentSalesCount + quantity,
+            });
+          }
+        }
+      }
+    }
   }
 }

@@ -14,6 +14,7 @@ class BookModel {
   String? isbn;
   int? availability;
   int? popularity;
+  int? salesCount; // Add the salesCount field
 
   BookModel copyWith({
     String? id,
@@ -29,6 +30,7 @@ class BookModel {
     String? isbn,
     int? availability,
     int? popularity,
+    int? salesCount, // Include salesCount in copyWith
   }) {
     return BookModel(
       id: id ?? this.id,
@@ -44,6 +46,7 @@ class BookModel {
       isbn: isbn ?? this.isbn,
       availability: availability ?? this.availability,
       popularity: popularity ?? this.popularity,
+      salesCount: salesCount ?? this.salesCount, // Add salesCount to copyWith
     );
   }
 
@@ -61,6 +64,7 @@ class BookModel {
     this.isbn,
     this.availability,
     this.popularity,
+    this.salesCount, // Add salesCount to constructor
   });
 
   BookModel.fromJson(Map<String, dynamic> json) {
@@ -73,14 +77,14 @@ class BookModel {
     language = json['volumeInfo']?['language'] ?? json['language'];
     thumbnail = json['volumeInfo']?['imageLinks']?['thumbnail'] ?? json['thumbnail'];
     description = json['volumeInfo']?['description'] ?? json['description'];
-    price = (json['saleInfo']?['listPrice']?['amount'] as num?)?.toInt() ??
-        Random().nextInt(500) + 1;
+    price = (json['saleInfo']?['listPrice']?['amount'] as num?)?.toInt();
     isbn = json['volumeInfo']?['industryIdentifiers']?.firstWhere(
           (identifier) => identifier['type'] == 'ISBN_13' || identifier['type'] == 'ISBN_10',
       orElse: () => {},
     )['identifier'] ?? json['isbn'];
-    availability = Random().nextInt(50) + 1;
-    popularity = Random().nextInt(5) + 1;
+    availability = json['availability'] ?? 0;
+    popularity = json['popularity'] ?? 0;
+    salesCount = json['salesCount'] ?? 0; // Ensure salesCount is loaded from JSON
   }
 
   Map<String, dynamic> toJson() {
@@ -98,6 +102,7 @@ class BookModel {
       'isbn': isbn,
       'availability': availability,
       'popularity': popularity,
+      'salesCount': salesCount, // Include salesCount in toJson
     };
   }
 }
