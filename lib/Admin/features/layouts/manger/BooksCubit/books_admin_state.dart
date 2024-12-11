@@ -11,6 +11,10 @@ class BookLoaded extends BooksAdminState {
 
   BookLoaded(this.books);
 }
+class LowStockBooksLoaded extends BooksAdminState {
+  final List<BookModel> lowStockBooks;
+  LowStockBooksLoaded(this.lowStockBooks);
+}
 
 class BookError extends BooksAdminState {
   final String message;

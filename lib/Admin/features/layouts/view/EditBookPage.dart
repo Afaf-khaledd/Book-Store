@@ -88,6 +88,8 @@ class _EditBookPageState extends State<EditBookPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.book == null ? "Add Book" : "Edit Book"),
+        toolbarHeight: 80,
+        backgroundColor: Colors.transparent,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

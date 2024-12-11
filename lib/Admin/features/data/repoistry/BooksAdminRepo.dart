@@ -12,6 +12,13 @@ class BooksAdminRepository{
         .map((doc) => BookModel.fromJson(doc.data() as Map<String, dynamic>))
         .toList();
   }
+  Future<List<BookModel>> fetchLowStockBooks() async {
+    final snapshot = await _bookCollection.get();
+    return snapshot.docs
+        .map((doc) => BookModel.fromJson(doc.data() as Map<String, dynamic>))
+        .where((book) => book.availability! < 5)
+        .toList();
+  }
 
   Future<void> addBook(BookModel book) async {
     final docRef = _bookCollection.doc();

@@ -18,6 +18,15 @@ class BooksAdminCubit extends Cubit<BooksAdminState> {
       emit(BookError("Failed to fetch books"));
     }
   }
+  void fetchLowStockBooks() async {
+    emit(BookLoading());
+    try {
+      final lowStockBooks = await bookRepository.fetchLowStockBooks();
+      emit(LowStockBooksLoaded(lowStockBooks));
+    } catch (e) {
+      emit(BookError("Failed to fetch low stock books"));
+    }
+  }
 
   void addBook(BookModel book) async {
     emit(BookLoading());

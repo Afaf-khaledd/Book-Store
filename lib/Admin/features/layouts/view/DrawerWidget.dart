@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../User/features/layouts/manger/AuthCubit/auth_cubit.dart';
 import '../../../../User/features/layouts/view/OnboardingPage.dart';
 import '../../../../Admin/features/layouts/view/OrderPage.dart';
+import '../manger/BooksCubit/books_admin_cubit.dart';
 import 'AvailabilityPage.dart';
 import 'Dashboard.dart';
 import 'ReviewsPage.dart';
@@ -83,6 +84,7 @@ class DrawerWidget extends StatelessWidget {
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             title: const Text('Availability'),
             onTap: () {
+              context.read<BooksAdminCubit>().fetchLowStockBooks();
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute<void>(
