@@ -1,5 +1,6 @@
 import 'package:book_store/User/features/layouts/view/LoadingIndicator.dart';
 import 'package:book_store/User/features/layouts/view/SearchPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -38,11 +39,19 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
               onPressed: (){
-                // to notification page
-                Navigator.push(context, MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const NotificationPage(),
-                ),
-                );
+                final currentUser = FirebaseAuth.instance.currentUser;
+                if (currentUser != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => NotificationPage(userId: currentUser.uid),
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Please log in to view notifications.')),
+                  );
+                }
               },
               icon: const Icon(Icons.notifications,color: mainGreenColor,size: 27,)
           ),

@@ -78,7 +78,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Order ID: ${index+1}",
+                        "Order ID: ${order['orderId']}",
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,

@@ -30,9 +30,9 @@ class OrdersCubit extends Cubit<OrdersState> {
     }
   }
 
-  Future<void> updateOrderStatus(String orderId, String status) async {
+  Future<void> updateOrderStatus(String orderId, String status, String userId) async {
     try {
-      await _repository.updateOrderStatus(orderId, status);
+      await _repository.updateOrderStatus(orderId, status, userId);
       emit(OrderStatusUpdated());
     } catch (e) {
       emit(OrdersError(e.toString()));

@@ -28,7 +28,7 @@ class OrderRepository{
         .toList();
   }
 
-  Future<void> updateOrderStatus(String orderId, String status) async {
+  Future<void> updateOrderStatus(String orderId, String status, String userId) async {
     final orderRef = _firestore.collection('orders').doc(orderId);
     final orderSnapshot = await orderRef.get();
 
@@ -38,6 +38,14 @@ class OrderRepository{
 
       // Update the order status
       await orderRef.update({'status': status});
+
+      // Update the notifications collection
+      final notificationRef = _firestore.collection('notifications');
+      if (status == 'confirmed' || status == 'shipped') {
+        await notificationRef.doc(orderId).set({'orderId': orderId, 'userId': userId, 'status': status});
+      } else if (status == 'pending') {
+        await notificationRef.doc(orderId).delete();
+      }
 
       if (status == 'confirmed') {
         // Loop through each order item and update the book availability and sales count

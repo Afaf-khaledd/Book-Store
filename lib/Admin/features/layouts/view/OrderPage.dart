@@ -173,7 +173,7 @@ class OrderPage extends StatelessWidget {
                                         ],
                                         onChanged: (value) {
                                           if (value != null && value != 'cancelled') {
-                                            context.read<OrdersCubit>().updateOrderStatus(order.orderId, value);
+                                            context.read<OrdersCubit>().updateOrderStatus(order.orderId, value, order.userId);
                                           }
                                         },
                                         style: const TextStyle(color: Colors.black),
