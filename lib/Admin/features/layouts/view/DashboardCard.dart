@@ -18,7 +18,7 @@ class DashboardCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 40.0,vertical: 20),
         child: Column(
           children: [
             Icon(icon, size: 48, color: color),

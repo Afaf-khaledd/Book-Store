@@ -25,7 +25,13 @@ class DrawerWidget extends StatelessWidget {
             decoration: BoxDecoration(
               color: mainGreenColor,
             ),
-            child: Align(alignment: Alignment.centerLeft,child: Text('Welcome Admin,'),),
+            child: Align(alignment: Alignment.centerLeft,child: Row(
+              children: [
+                Icon(Icons.person,color: Colors.white,),
+                SizedBox(width: 10,),
+                Text('Welcome Admin',style: TextStyle(fontSize: 20,color: Colors.white),),
+              ],
+            ),),
           ),
           ListTile(
             title: const Text('Dashboard'),

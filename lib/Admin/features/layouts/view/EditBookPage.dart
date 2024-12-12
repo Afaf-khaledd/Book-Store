@@ -1,3 +1,5 @@
+import 'package:book_store/User/features/layouts/view/LoadingIndicator.dart';
+import 'package:book_store/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -96,7 +98,7 @@ class _EditBookPageState extends State<EditBookPage> {
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               if (_thumbnailUrl != null)
                 Center(
@@ -110,18 +112,32 @@ class _EditBookPageState extends State<EditBookPage> {
               if (_isUploadingImage)
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 16.0),
-                  child: CircularProgressIndicator(),
+                  child: NewLoadingIndicator(),
                 ),
               if (!_isUploadingImage)
                 TextButton.icon(
                   onPressed: _pickAndUploadImage,
-                  icon: const Icon(Icons.upload),
-                  label: const Text("Upload Cover Image"),
+                  icon: const Icon(Icons.upload,color: mainGreenColor,),
+                  label: const Text("Upload Cover Image",style: TextStyle(color: mainGreenColor),),
                 ),
               const SizedBox(height: 16),
               TextFormField(
                 controller: _titleController,
-                decoration: const InputDecoration(labelText: "Title"),
+                decoration: const InputDecoration(labelText: "Title",
+                  labelStyle: TextStyle(color: mainGreenColor),
+                  focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                  color: mainGreenColor,
+                  width: 2.0,
+                  ),
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                  color: Colors.grey,
+                  width: 1.0,
+                  ),
+                  ),
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "Please enter a title";
@@ -132,7 +148,20 @@ class _EditBookPageState extends State<EditBookPage> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _authorsController,
-                decoration: const InputDecoration(labelText: "Authors (comma-separated)"),
+                decoration: const InputDecoration(labelText: "Authors (comma-separated)",
+                  labelStyle: TextStyle(color: mainGreenColor),
+                  focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: mainGreenColor,
+                    width: 2.0,
+                  ),
+                ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),),
               ),
               const SizedBox(height: 16),
               BlocBuilder<CategoryCubit, CategoryState>(
@@ -143,7 +172,20 @@ class _EditBookPageState extends State<EditBookPage> {
                     final categories = state.categories;
                     return DropdownButtonFormField<String>(
                       value: _selectedCategoryId,
-                      decoration: const InputDecoration(labelText: "Category"),
+                      decoration: const InputDecoration(labelText: "Category",
+                        labelStyle: TextStyle(color: mainGreenColor),
+                        focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: mainGreenColor,
+                          width: 2.0,
+                        ),
+                      ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.grey,
+                            width: 1.0,
+                          ),
+                        ),),
                       items: categories
                           .map((category) => DropdownMenuItem<String>(
                         value: category.id,
@@ -170,7 +212,21 @@ class _EditBookPageState extends State<EditBookPage> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _priceController,
-                decoration: const InputDecoration(labelText: "Price"),
+                decoration: const InputDecoration(labelText: "Price",
+                  labelStyle: TextStyle(color: mainGreenColor),
+                  focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                  color: mainGreenColor,
+                  width: 2.0,
+                  ),
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                  color: Colors.grey,
+                  width: 1.0,
+                  ),
+                  ),
+                ),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -185,7 +241,20 @@ class _EditBookPageState extends State<EditBookPage> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _availabilityController,
-                decoration: const InputDecoration(labelText: "Availability"),
+                decoration: const InputDecoration(labelText: "Availability",
+                  labelStyle: TextStyle(color: mainGreenColor),
+                  focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: mainGreenColor,
+                    width: 2.0,
+                  ),
+                ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -200,7 +269,20 @@ class _EditBookPageState extends State<EditBookPage> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _descriptionController,
-                decoration: const InputDecoration(labelText: "Description"),
+                decoration: const InputDecoration(labelText: "Description",
+                  labelStyle: TextStyle(color: mainGreenColor),
+                  focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: mainGreenColor,
+                    width: 2.0,
+                  ),
+                ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),),
                 maxLines: 4,
               ),
               const SizedBox(height: 24),
@@ -226,6 +308,11 @@ class _EditBookPageState extends State<EditBookPage> {
                     Navigator.pop(context);
                   }
                 },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: mainGreenColor,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  ),
                 child: Text(widget.book == null ? "Add" : "Update"),
               ),
             ],

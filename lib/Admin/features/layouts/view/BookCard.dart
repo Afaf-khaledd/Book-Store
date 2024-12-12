@@ -1,9 +1,8 @@
 import 'package:book_store/Admin/features/layouts/view/EditBookPage.dart';
+import 'package:book_store/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../User/features/data/models/BookModel.dart';
-import '../manger/BooksCubit/books_admin_cubit.dart';
 
 class BookCard extends StatelessWidget {
   final BookModel book;
@@ -70,7 +69,7 @@ class BookCard extends StatelessWidget {
                     Text(
                       '\$${book.price ?? 0}',
                       style: const TextStyle(
-                        color: Colors.green,
+                        color: mainGreenColor,
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
                       ),
@@ -84,7 +83,7 @@ class BookCard extends StatelessWidget {
             top: 8,
             right: 8,
             child: IconButton(
-              icon: const Icon(Icons.delete, color: Colors.red),
+              icon: const Icon(Icons.remove_circle_rounded, color: Colors.red),
               onPressed: onDelete,
             ),
           ),
@@ -92,7 +91,7 @@ class BookCard extends StatelessWidget {
             bottom: 8,
             right: 8,
             child: IconButton(
-              icon: const Icon(Icons.edit, color: Colors.blue),
+              icon: const Icon(Icons.edit, color: mainGreenColor),
               onPressed: onEdit,
             ),
           ),

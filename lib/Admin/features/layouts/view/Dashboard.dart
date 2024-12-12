@@ -1,7 +1,9 @@
 import 'package:book_store/Admin/features/layouts/view/DrawerWidget.dart';
+import 'package:book_store/User/features/layouts/view/LoadingIndicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../constant.dart';
 import '../manger/DashboardCubit/dashboard_cubit.dart';
 import 'DashboardCard.dart';
 import 'DashboardChart.dart';
@@ -18,19 +20,19 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
-    final dashboardCubit = context.read<DashboardCubit>();
+    context.read<DashboardCubit>();
 
     return Scaffold(
       drawer: const DrawerWidget(),
       appBar: AppBar(
-        title: const Text('Admin Dashboard'),
+        title: const Text('Admin Dashboard',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25,color: mainGreenColor),),
         toolbarHeight: 80,
         backgroundColor: Colors.transparent,
       ),
       body: BlocBuilder<DashboardCubit, DashboardState>(
         builder: (context, state) {
           if (state is DashboardLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: NewLoadingIndicator());
           } else if (state is DashboardLoaded) {
             return SingleChildScrollView(
               child: Padding(
@@ -41,13 +43,13 @@ class _DashboardPageState extends State<DashboardPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         DashboardCard(
-                          title: 'Total Users',
+                          title: 'Users',
                           value: state.totalUsers.toString(),
                           icon: Icons.person,
                           color: Colors.green,
                         ),
                         DashboardCard(
-                          title: 'Total Orders',
+                          title: 'Orders',
                           value: state.totalOrders.toString(),
                           icon: Icons.shopping_cart,
                           color: Colors.blue,
@@ -59,13 +61,13 @@ class _DashboardPageState extends State<DashboardPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         DashboardCard(
-                          title: 'Total Books',
+                          title: 'Books',
                           value: state.totalBooks.toString(),
                           icon: Icons.book,
                           color: Colors.orange,
                         ),
                         DashboardCard(
-                          title: 'Total Categories',
+                          title: 'Categories',
                           value: state.totalCategories.toString(),
                           icon: Icons.category,
                           color: Colors.purple,
