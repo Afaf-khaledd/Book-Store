@@ -113,7 +113,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Profile'),
+        title: const Text('Edit Profile',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25,color: mainGreenColor),),
         toolbarHeight: 80,
         backgroundColor: Colors.transparent,
       ),
@@ -128,17 +128,42 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 decoration: const InputDecoration(
                   labelText: 'Username',
                   prefixIcon: Icon(Icons.person),
+                  labelStyle: TextStyle(color: mainGreenColor),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: mainGreenColor,
+                      width: 2.0,
+                    ),
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
                 ),
                 validator: Validators.validateNotEmpty,
               ),
               const SizedBox(height: 10,),
               TextFormField(
                 controller: _emailController,
-                //enabled: false,
                 readOnly: true,
                 decoration: const InputDecoration(
                   labelText: 'Email',
                   prefixIcon: Icon(Icons.email),
+                  labelStyle: TextStyle(color: mainGreenColor),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: mainGreenColor,
+                      width: 2.0,
+                    ),
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 10,),
@@ -148,6 +173,19 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 decoration: const InputDecoration(
                   labelText: 'Phone',
                   prefixIcon: Icon(Icons.phone),
+                  labelStyle: TextStyle(color: mainGreenColor),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: mainGreenColor,
+                      width: 2.0,
+                    ),
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
                 ),
                 validator: Validators.validatePhone,
               ),
@@ -158,6 +196,19 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 decoration: const InputDecoration(
                   labelText: 'Address',
                   prefixIcon: Icon(Icons.home),
+                  labelStyle: TextStyle(color: mainGreenColor),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: mainGreenColor,
+                      width: 2.0, // Thickness of the line
+                    ),
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
                 ),
                 validator: Validators.validateNotEmpty,
               ),
@@ -169,6 +220,19 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 decoration: InputDecoration(
                   labelText: 'Birthday',
                   prefixIcon: const Icon(Icons.calendar_month),
+                  labelStyle: const TextStyle(color: mainGreenColor),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: mainGreenColor,
+                      width: 2.0, // Thickness of the line
+                    ),
+                  ),
+                  enabledBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.calendar_today),
                     onPressed: () {
@@ -186,6 +250,19 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 decoration: InputDecoration(
                   labelText: 'New Password (optional)',
                   prefixIcon: const Icon(Icons.lock),
+                  labelStyle: const TextStyle(color: mainGreenColor),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: mainGreenColor,
+                      width: 2.0, // Thickness of the line
+                    ),
+                  ),
+                  enabledBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
                   suffixIcon: IconButton(
                     icon: Icon(
                       _isPasswordHidden
@@ -223,6 +300,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final List<DateTime?>? selectedDates = await showCalendarDatePicker2Dialog(
       context: context,
       config: CalendarDatePicker2WithActionButtonsConfig(
+        selectedDayHighlightColor: mainGreenColor,
         calendarType: CalendarDatePicker2Type.single,
       ),
       dialogSize: const Size(325, 400),

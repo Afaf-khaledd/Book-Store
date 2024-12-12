@@ -30,7 +30,7 @@ class _SplashPageState extends State<SplashPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset('images/splash1.png',width: 270,),
-                const Text("BOOK WORLD",style: TextStyle(color: Color(0xff4a5447),fontSize: 33,fontWeight: FontWeight.w500),),
+                const Text("BOOK WORLD",style: TextStyle(color: Color(0xff4a5447),fontSize: 33,fontWeight: FontWeight.w600),),
               ],
             ),
           ),
@@ -41,7 +41,7 @@ class _SplashPageState extends State<SplashPage> {
                 end: Alignment.bottomCenter,
                 colors: [
                   const Color(0xff4a5447).withOpacity(0.1),
-                  const Color(0xff4a5447).withOpacity(0.6),
+                  const Color(0xff4a5447).withOpacity(0.5),
                 ],
               ),
             ),

@@ -1,8 +1,9 @@
+import 'package:book_store/User/features/layouts/view/LoadingIndicator.dart';
 import 'package:book_store/User/features/layouts/view/LoginPage.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../constant.dart';
 import '../../../core/SharedPreference.dart';
 import '../../../core/Validators.dart';
@@ -44,6 +45,7 @@ class _SignUpState extends State<SignUp> {
     final List<DateTime?>? selectedDates = await showCalendarDatePicker2Dialog(
       context: context,
       config: CalendarDatePicker2WithActionButtonsConfig(
+        selectedDayHighlightColor: mainGreenColor,
         calendarType: CalendarDatePicker2Type.single,
       ),
       dialogSize: const Size(325, 400),
@@ -71,7 +73,7 @@ class _SignUpState extends State<SignUp> {
         iconTheme: const IconThemeData(color: mainGreenColor),
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        title: const Text("Sign Up"),
+        title: const Text("Sign Up",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25,color: mainGreenColor),),
         toolbarHeight: 70,
       ),
       body: Padding(
@@ -80,20 +82,18 @@ class _SignUpState extends State<SignUp> {
           child: BlocListener<AuthCubit, AuthState>(
             listener: (context, state) {
               if (state is AuthLoading) {
-                // Show loading spinner or indicator
                 showDialog(
                   context: context,
-                  builder: (_) => const Center(child: CircularProgressIndicator()),
+                  builder: (_) => const Center(child: NewLoadingIndicator()),
                 );
               } else if (state is AuthSuccess) {
-                // On success, close loading and navigate
-                Navigator.pop(context); // Dismiss loading dialog
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
-                // Navigate to next screen or login
+                Navigator.pop(context);
+                Fluttertoast.showToast(msg: state.message,backgroundColor: Colors.green);
+                //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
               } else if (state is AuthError) {
-                // On error, close loading and show error
-                Navigator.pop(context); // Dismiss loading dialog
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
+                Navigator.pop(context);
+                Fluttertoast.showToast(msg: state.error,backgroundColor: Colors.redAccent);
+                //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
               }
             },
             child: Form(
@@ -106,11 +106,17 @@ class _SignUpState extends State<SignUp> {
                   controller: _usernameController,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.person),
-                    labelText: "Username",
+                    labelText: "Username",labelStyle: const TextStyle(color: mainGreenColor,fontWeight: FontWeight.w400),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(18.0),
                     ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      borderSide: const BorderSide(color: mainGreenColor, width: 2.0),
+                    ),
+
                   ),
+                  validator: Validators.validateNotEmpty,
                 ),
                 const SizedBox(height: 16),
 
@@ -119,8 +125,13 @@ class _SignUpState extends State<SignUp> {
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.email),
                     labelText: "Email",
+                    labelStyle: const TextStyle(color: mainGreenColor,fontWeight: FontWeight.w400),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(18.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      borderSide: const BorderSide(color: mainGreenColor, width: 2.0),
                     ),
                   ),
                   validator: Validators.validateEmail,
@@ -133,8 +144,13 @@ class _SignUpState extends State<SignUp> {
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock),
                     labelText: "Password",
+                    labelStyle: const TextStyle(color: mainGreenColor,fontWeight: FontWeight.w400),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(18.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      borderSide: const BorderSide(color: mainGreenColor, width: 2.0),
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(_isPasswordVisible
@@ -154,9 +170,13 @@ class _SignUpState extends State<SignUp> {
                   controller: _phoneController,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.phone),
-                    labelText: "Phone Number",
+                    labelText: "Phone Number",labelStyle: const TextStyle(color: mainGreenColor,fontWeight: FontWeight.w400),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(18.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      borderSide: const BorderSide(color: mainGreenColor, width: 2.0),
                     ),
                   ),
                   validator: Validators.validatePhone,
@@ -167,11 +187,16 @@ class _SignUpState extends State<SignUp> {
                   controller: _addressController,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.home),
-                    labelText: "Address",
+                    labelText: "Address",labelStyle: const TextStyle(color: mainGreenColor,fontWeight: FontWeight.w400),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(18.0),
                     ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      borderSide: const BorderSide(color: mainGreenColor, width: 2.0),
+                    ),
                   ),
+                  validator: Validators.validateNotEmpty,
                 ),
                 const SizedBox(height: 16),
 
@@ -179,9 +204,13 @@ class _SignUpState extends State<SignUp> {
                   controller: _dateController,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.calendar_month),
-                    labelText: "Birthday Date",
+                    labelText: "Birthday Date",labelStyle: const TextStyle(color: mainGreenColor,fontWeight: FontWeight.w400),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(18.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      borderSide: const BorderSide(color: mainGreenColor, width: 2.0),
                     ),
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.calendar_today),
@@ -190,12 +219,14 @@ class _SignUpState extends State<SignUp> {
                       },
                     ),
                   ),
+                  validator: Validators.validateNotEmpty,
                   readOnly: true,
                 ),
                 const SizedBox(height: 16),
                 Row(
                   children: [
                     Checkbox(
+                      activeColor: mainGreenColor,
                       value: _rememberMe,
                       onChanged: (value) {
                         setState(() {
@@ -262,7 +293,7 @@ class _SignUpState extends State<SignUp> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("Do you have an account?"),
+                        const Text("Do you have an account?",style: TextStyle(color:mainGreenColor,fontSize: 17,fontWeight: FontWeight.w400),),
                         TextButton(
                           onPressed: (){
                             Navigator.push(context,
@@ -273,7 +304,6 @@ class _SignUpState extends State<SignUp> {
                             "Login",
                             style: TextStyle(
                               color: mainGreenColor,
-                              decoration: TextDecoration.underline,
                             ),
                           ),
                         )
@@ -283,7 +313,7 @@ class _SignUpState extends State<SignUp> {
               ],
             ),
           ),
-),
+        ),
         ),
       ),
     );

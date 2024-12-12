@@ -1,4 +1,5 @@
 import 'package:book_store/User/features/layouts/view/BookDetailsPage.dart';
+import 'package:book_store/constant.dart';
 import 'package:flutter/material.dart';
 import '../../data/models/BookModel.dart';
 
@@ -55,7 +56,7 @@ class _BookCardState extends State<BookCard> {
                     widget.book.title ?? "Untitled",
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold,color: Colors.black54),
                   ),
                   const SizedBox(height: 4),
                   Row(
@@ -75,10 +76,10 @@ class _BookCardState extends State<BookCard> {
                       ),
                       Text(
                         '\$${widget.book.price ?? "Free"}',
-                        style: const TextStyle(
+                        style:  TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.green,
+                          color: mainGreenColor.withOpacity(0.8),
                         ),
                       ),
                     ],

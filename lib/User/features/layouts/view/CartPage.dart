@@ -1,4 +1,5 @@
 import 'package:book_store/User/features/data/repoistry/OrderRepo.dart';
+import 'package:book_store/User/features/layouts/view/LoadingIndicator.dart';
 import 'package:book_store/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,14 +17,14 @@ class CartPage extends StatelessWidget {
     final OrderRepository orderService = OrderRepository();
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Cart"),
+        title: const Text("Cart",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25,color: mainGreenColor),),
         toolbarHeight: 70,
         backgroundColor: Colors.transparent,
       ),
       body: BlocBuilder<CartCubit, CartState>(
         builder: (context, state) {
           if (state is CartLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: NewLoadingIndicator());
           } else if (state is CartLoaded) {
             final cartItems = state.items;
             double totalPrice = 0.0;
@@ -39,10 +40,11 @@ class CartPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 4),
                     child: Text(
-                      'Total Items (${cartItems.length})',
+                      'You have ${cartItems.length} items in cart',
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        color: mainGreenColor
                       ),
                     ),
                   ),
@@ -58,12 +60,14 @@ class CartPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const Divider(),
                         Container(
                           decoration: const BoxDecoration(
-                            color: appBGColor,
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(16.0),
+                              topRight: Radius.circular(16.0),
+                            ),
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
                           child: Column(
@@ -83,7 +87,7 @@ class CartPage extends StatelessWidget {
                                     style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.green,
+                                      color: Colors.black54,
                                     ),
                                   ),
                                 ],
@@ -104,12 +108,12 @@ class CartPage extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.green,
+                                      color: Colors.black54,
                                     ),
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 12,),
+                              const SizedBox(height: 12),
                               const Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -130,7 +134,7 @@ class CartPage extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 10,),
+                              const SizedBox(height: 10),
                               const Divider(
                                 color: Colors.grey,
                                 height: 20,
@@ -140,9 +144,13 @@ class CartPage extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 16),
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Column(
                                 children: [
@@ -158,7 +166,7 @@ class CartPage extends StatelessWidget {
                                     style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.green,
+                                      color: Colors.black54,
                                     ),
                                   ),
                                 ],

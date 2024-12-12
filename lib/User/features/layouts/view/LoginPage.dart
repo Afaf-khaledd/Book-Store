@@ -2,11 +2,13 @@ import 'package:book_store/Admin/features/layouts/view/Dashboard.dart';
 import 'package:book_store/User/features/layouts/view/MainNavPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../../constant.dart';
 import '../../../core/SharedPreference.dart';
 import '../../../core/Validators.dart';
 import '../manger/AuthCubit/auth_cubit.dart';
+import 'LoadingIndicator.dart';
 import 'SignUpPage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -36,22 +38,26 @@ class _LoginPageState extends State<LoginPage> {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
+          Fluttertoast.showToast(msg: state.message,backgroundColor: Colors.green);
+          /*ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.message)),
-          );
+          );*/
         } else if (state is AuthError) {
-          ScaffoldMessenger.of(context).showSnackBar(
+          Fluttertoast.showToast(msg: state.error,backgroundColor: Colors.redAccent);
+          /*ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.error)),
-          );
+          );*/
         }
         else if (state is AuthResetPasswordSuccess) {
+          Fluttertoast.showToast(msg: "Password reset email sent", backgroundColor: Colors.orangeAccent);
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("Password reset email sent")),
           );
         } else if (state is AuthResetPasswordError) {
-          ScaffoldMessenger.of(context).showSnackBar(
+          Fluttertoast.showToast(msg: state.error,backgroundColor: Colors.redAccent);
+          /*ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.error)),
-          );
+          );*/
         }
       },
       builder: (context, state) {
@@ -60,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
             iconTheme: const IconThemeData(color: mainGreenColor),
             backgroundColor: Colors.transparent,
             centerTitle: true,
-            title: const Text("Login"),
+            title: const Text("Login",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25,color: mainGreenColor),),
             toolbarHeight: 80,
           ),
           body: Padding(
@@ -77,8 +83,13 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.email),
                         labelText: "Email",
+                        labelStyle: const TextStyle(color: mainGreenColor,fontWeight: FontWeight.w400),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          borderSide: const BorderSide(color: mainGreenColor, width: 2.0),
                         ),
                       ),
                       validator: Validators.validateEmail,
@@ -90,8 +101,13 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.lock),
                         labelText: "Password",
+                        labelStyle: const TextStyle(color: mainGreenColor,fontWeight: FontWeight.w400),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          borderSide: const BorderSide(color: mainGreenColor, width: 2.0),
                         ),
                         suffixIcon: IconButton(
                           icon: Icon(_isPasswordVisible
@@ -113,6 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                         Row(
                           children: [
                             Checkbox(
+                              activeColor: mainGreenColor,
                               value: _rememberMe,
                               onChanged: (value) {
                                 setState(() {
@@ -139,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 20),
                     state is AuthLoading
-                        ? const Center(child: CircularProgressIndicator())
+                        ? const Center(child: NewLoadingIndicator())
                         : SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -170,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         child: const Text(
                           "Login",
-                          style: TextStyle(fontSize: 18, color: Colors.white),
+                          style: TextStyle(fontSize: 20, color: Colors.white),
                         ),
                       ),
                     ),
@@ -198,7 +215,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Don’t have an account?"),
+                          const Text("Don’t have an account?",style: TextStyle(color:mainGreenColor,fontSize: 17,fontWeight: FontWeight.w400),),
                           TextButton(
                             onPressed: () {
                               Navigator.push(context, MaterialPageRoute<void>(
@@ -210,7 +227,6 @@ class _LoginPageState extends State<LoginPage> {
                               "Sign Up",
                               style: TextStyle(
                                 color: mainGreenColor,
-                                decoration: TextDecoration.underline,
                               ),
                             ),
                           ),

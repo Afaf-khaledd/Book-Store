@@ -37,20 +37,20 @@ class _CartItemState extends State<CartItem> {
           height: 50,
           fit: BoxFit.cover,
         ),
-        title: Text(widget.item.title),
+        title: Text(widget.item.title,maxLines: 2,overflow: TextOverflow.ellipsis,),
         subtitle: Text('Total Price: \$${totalItemPrice.toStringAsFixed(2)}'),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              icon: const Icon(Icons.remove_circle_outline),
+              icon: const Icon(Icons.remove_circle_outline_rounded),
               onPressed: () {
                 if (widget.item.quantity > 1) {
                   BlocProvider.of<CartCubit>(context).updateQuantity(user.uid,widget.item.bookId, -1);
                 }
               },
             ),
-            Text('${widget.item.quantity}'),
+            Text('${widget.item.quantity}',style: const TextStyle(fontSize: 16),),
             IconButton(
               icon: const Icon(Icons.add_circle_outline),
               onPressed: () {
@@ -58,7 +58,7 @@ class _CartItemState extends State<CartItem> {
               },
             ),
             IconButton(
-              icon: const Icon(Icons.delete_outline, color: Colors.red),
+              icon: const Icon(Icons.delete_outline_rounded, color: Colors.red),
               onPressed: () {
                 _showDeleteConfirmation(context);
               },

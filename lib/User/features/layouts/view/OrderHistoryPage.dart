@@ -25,14 +25,27 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
     final authCubit = BlocProvider.of<AuthCubit>(context);
     user = authCubit.cachedUser!;
   }
-
+  Color _getStatusColor(String status) {
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return Colors.orange;
+      case 'shipped':
+        return Colors.green;
+      case 'confirmed':
+        return Colors.blue;
+      case 'canceled':
+        return Colors.red;
+      default:
+        return Colors.black;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Order History"),
+        title: const Text("Order History",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25,color: mainGreenColor),),
         backgroundColor: Colors.transparent,
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -66,15 +79,41 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                     children: [
                       Text(
                         "Order ID: ${index+1}",
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                       ),
-                      Text("Date: ${order['date'].toDate()}"),
+                      Text("Date: ${order['date'].toDate()}",style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),),
+                      Row(
+                        children: [
+                          const Text(
+                            "Status: ",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            "${order['status']}",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: _getStatusColor(order['status']),
+                            ),
+                          ),
+                        ],
+                      ),
                       const SizedBox(height: 8),
-                      Text("Status: ${order['status']}"),
-                      const SizedBox(height: 8),
-                      Text("Total Cost: \$${order['totalCost'].toStringAsFixed(2)}"),
+                      Text("Total Cost: \$${order['totalCost'].toStringAsFixed(2)}",style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),),
                       const Divider(),
-                      const Text("Items:", style: TextStyle(fontWeight: FontWeight.bold)),
+                      const Text("Items:", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18)),
                       ...items.map((item) => Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                         child: Text(
@@ -158,4 +197,5 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
       ),
     );
   }
+
 }

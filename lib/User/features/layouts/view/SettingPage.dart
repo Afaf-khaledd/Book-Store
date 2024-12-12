@@ -1,5 +1,4 @@
 import 'package:book_store/User/features/layouts/view/AboutAppPage.dart';
-import 'package:book_store/User/features/layouts/view/CartPage.dart';
 import 'package:book_store/User/features/layouts/view/EditProfilePage.dart';
 import 'package:book_store/User/features/layouts/view/OnboardingPage.dart';
 import 'package:book_store/constant.dart';
@@ -72,7 +71,7 @@ class _SettingPageState extends State<SettingPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: const Text('Settings'),
+        title: const Text('Settings',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25,color: mainGreenColor),),
         toolbarHeight: 80,
       ),
       body: ListView.separated(

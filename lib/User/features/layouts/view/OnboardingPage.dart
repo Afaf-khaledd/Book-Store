@@ -42,12 +42,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   ),
                   OnboardingPageBody(
                     title: "AnyTime, AnyWhere",
-                    description: "Personalize your experience save your favorite books, track your orders, and manage your account with ease. With just a few clicks, your next great read will be on its way to your doorstep.",
+                    description: "Personalize your experience, track your orders, and manage your account with ease. With just a few clicks, your next great read will be on its way to your doorstep.",
                     url: 'images/gs2.jpg',
                   ),
                   OnboardingPageBody(
                     title: "Stay Connected",
-                    description: "Track your order and leave reviews for books you've enjoyed. Your feedback not only helps others but also builds a community of book enthusiasts who share your passion.",
+                    description: "Leave reviews for books you've enjoyed. Your feedback not only helps others but also builds a community of book enthusiasts who share your passion.",
                     url: 'images/gs3.jpg',
                   ),
                 ],
@@ -77,8 +77,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 child: const Text(
                   "Create New Account",
                   style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 19,
+                    fontWeight: FontWeight.w500,
                     color: appBGColor,
                   ),
                 ),
@@ -105,8 +105,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 child: const Text(
                   "Login",
                   style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 19,
+                    fontWeight: FontWeight.w500,
                     color: mainGreenColor,
                   ),
                 ),

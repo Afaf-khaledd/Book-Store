@@ -1,3 +1,4 @@
+import 'package:book_store/User/features/layouts/view/LoadingIndicator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,6 @@ class _SearchPageState extends State<SearchPage> {
     if (!_isListening) {
       final status = await Permission.microphone.request();
       if (!status.isGranted) {
-        print("Microphone permission denied");
         return;
       }
 
@@ -71,7 +71,7 @@ class _SearchPageState extends State<SearchPage> {
         ScanMode.BARCODE,
       );
 
-      if (barcodeResult != "-1") { // "-1" indicates cancellation
+      if (barcodeResult != "-1") {
         setState(() {
           searchController.text = barcodeResult;
         });
@@ -94,10 +94,14 @@ class _SearchPageState extends State<SearchPage> {
             controller: searchController,
             decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search_rounded),
-                labelText: "Search",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
+                labelText: "Search",labelStyle: const TextStyle(color: mainGreenColor,fontWeight: FontWeight.w400),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30.0),
+                borderSide: const BorderSide(color: mainGreenColor, width: 2.0),
+              ),
                 suffixIcon: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -129,8 +133,40 @@ class _SearchPageState extends State<SearchPage> {
             const Divider(),
             Expanded(
               child: searchQuery.isEmpty
-                  ? const Center(
-                child: Text("Start typing to search for books"),
+                  ?  Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.search,
+                      size: 50.0,
+                      color: mainGreenColor,
+                    ),
+                    const SizedBox(height: 20.0),
+                    Text(
+                      "Start typing to search for books",
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey[700],
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 10.0),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        "Find your favorite books, authors, and more by typing in the search bar.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 14.0,
+                          color: Colors.grey[500],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               )
                   : StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
@@ -139,12 +175,34 @@ class _SearchPageState extends State<SearchPage> {
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
-                        child: CircularProgressIndicator());
+                        child: NewLoadingIndicator());
                   }
 
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    return const Center(
-                      child: Text("No books found in the database"),
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.search_off_rounded,
+                            size: 50.0,
+                            color: Colors.grey[600],
+                          ),
+                          const SizedBox(height: 20.0),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                              "No books founded in database.",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                color: Colors.grey[500],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     );
                   }
                   final books = snapshot.data!.docs.where((doc) {
@@ -160,11 +218,32 @@ class _SearchPageState extends State<SearchPage> {
                       .toList();
 
                   if (books.isEmpty) {
-                    return const Center(
-                      child: Text("No matching books found"),
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.search_off_rounded,
+                            size: 50.0,
+                            color: Colors.grey[600],
+                          ),
+                          const SizedBox(height: 20.0),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                              "No matched books founded.",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                color: Colors.grey[500],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     );
                   }
-
                   return ListView.builder(
                     itemCount: books.length,
                     itemBuilder: (context, index) {
@@ -206,7 +285,7 @@ class _SearchPageState extends State<SearchPage> {
                               ),
                               trailing: Text(
                                 "Price: $price",
-                                style: const TextStyle(fontSize: 16),
+                                style: const TextStyle(fontSize: 16,color: mainGreenColor),
                               ),
                             ),
                           ),

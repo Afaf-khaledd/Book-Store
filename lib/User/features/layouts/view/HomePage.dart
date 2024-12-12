@@ -1,3 +1,4 @@
+import 'package:book_store/User/features/layouts/view/LoadingIndicator.dart';
 import 'package:book_store/User/features/layouts/view/SearchPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,11 +21,6 @@ class _HomePageState extends State<HomePage> {
   TextEditingController searchController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    context.read<BookCubit>().initializeBooks();
-  }
-  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (context.read<BookCubit>().state is! BookLoaded) {
@@ -36,7 +32,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Book World'),
+        title: const Text('Book World',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 25,color: mainGreenColor),),
         toolbarHeight: 80,
         backgroundColor: Colors.transparent,
         actions: [
@@ -48,7 +44,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 );
               },
-              icon: const Icon(Icons.notifications,color: mainGreenColor,)
+              icon: const Icon(Icons.notifications,color: mainGreenColor,size: 27,)
           ),
           const SizedBox(width: 10,)
         ],
@@ -132,13 +128,12 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-
             const SizedBox(height: 20,),
 
             BlocBuilder<BookCubit, BookState>(
               builder: (context, state) {
                 if (state is BookLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: NewLoadingIndicator());
                 } else if (state is BookLoaded) {
                   final books = state.books;
                   return Expanded(
@@ -146,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                       gridDelegate:
                       const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: 0.75,
+                        childAspectRatio: 0.6,
                       ),
                       itemCount: books.length,
                       itemBuilder: (context, index) {
@@ -158,9 +153,68 @@ class _HomePageState extends State<HomePage> {
                     ),
                   );
                 } else if (state is BookError) {
-                  return Center(child: Text(state.error));
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.book_outlined,
+                          size: 50.0,
+                          color: Colors.grey[600],
+                        ),
+                        const SizedBox(height: 20.0),
+                        Text(state.error),
+                        const SizedBox(height: 10.0),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            "It looks like we don't have any books at the moment. Please check back later.",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: Colors.grey[500],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
                 } else {
-                  return const Center(child: Text("No books available"));
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.book_outlined,
+                          size: 50.0,
+                          color: Colors.grey[600],
+                        ),
+                        const SizedBox(height: 20.0),
+                        Text(
+                          "No books available",
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[700],
+                          ),
+                        ),
+                        const SizedBox(height: 10.0),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            "It looks like we don't have any books at the moment. Please check back later.",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: Colors.grey[500],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
                 }
               },
             ),

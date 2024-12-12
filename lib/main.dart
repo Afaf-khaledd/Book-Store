@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
           create: (_) => getIt<AuthCubit>(),
         ),
         BlocProvider<BookCubit>(
-          create: (_) => getIt<BookCubit>(),
+          create: (_) => getIt<BookCubit>()..initializeBooks()..fetchBooksByCategory("0rDUsmLye5yyBShe2J6U"),
         ),
         BlocProvider<CartCubit>(
           create: (_) => getIt<CartCubit>(),
@@ -64,14 +64,15 @@ class MyApp extends StatelessWidget {
           create: (_) => getIt<DashboardCubit>()..fetchDashboardData(),
         ),
         BlocProvider<CategoryUCubit>(
-          create: (_) => getIt<CategoryUCubit>(),
+          create: (_) => getIt<CategoryUCubit>()..fetchCategories(),
         ),
       ],
-      child: MaterialApp(//.router
-      //routerConfig: AppRouter.router,
+      child: MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: appBGColor,
+        focusColor: mainGreenColor,
+        primaryColor: mainGreenColor
       ),
       home: const SplashPage(),
     ),

@@ -1,3 +1,4 @@
+import 'package:book_store/User/features/layouts/view/LoadingIndicator.dart';
 import 'package:book_store/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,13 +17,6 @@ class CategoriesPage extends StatefulWidget {
 class _CategoriesPageState extends State<CategoriesPage> {
   String? selectedCategory;
 
-  @override
-  void initState() {
-    super.initState();
-    // Fetch categories on init
-    context.read<CategoryUCubit>().fetchCategories();
-  }
-
   void _onCategoryLoaded(List<Map<String, dynamic>> categories) {
     if (categories.isNotEmpty && selectedCategory == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -38,17 +32,16 @@ class _CategoriesPageState extends State<CategoriesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Categories'),
+        title: const Text('Categories',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25,color: mainGreenColor),),
         toolbarHeight: 80,
         backgroundColor: Colors.transparent,
       ),
       body: Column(
         children: [
-          // Fetch and display categories from Firebase
           BlocBuilder<CategoryUCubit, CategoryUState>(
             builder: (context, state) {
               if (state is CategoryULoading) {
-                return const Center(child: CircularProgressIndicator());
+                return const Center(child: NewLoadingIndicator());
               } else if (state is CategoryULoaded) {
                 final categories = state.categories;
                 _onCategoryLoaded(categories);
@@ -71,8 +64,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
                           context.read<BookCubit>().fetchBooksByCategory(selectedCategory!);
                         },
                         child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 8),
-                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                          margin: const EdgeInsets.symmetric(horizontal: 6),
+                          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
                           decoration: BoxDecoration(
                             color: isSelected ? mainGreenColor : Colors.grey[300],
                             borderRadius: BorderRadius.circular(20),
@@ -96,11 +89,10 @@ class _CategoriesPageState extends State<CategoriesPage> {
             },
           ),
           const SizedBox(height: 11),
-          // Display books for the selected category
           BlocBuilder<BookCubit, BookState>(
             builder: (context, state) {
               if (state is BookLoading) {
-                return const Expanded(child: Center(child: CircularProgressIndicator()));
+                return const Expanded(child: Center(child: NewLoadingIndicator()));
               } else if (state is CategoryBooksLoaded) {
                 if (state.category == selectedCategory) {
                   final books = state.books;
@@ -121,7 +113,41 @@ class _CategoriesPageState extends State<CategoriesPage> {
                     ),
                   );
                 } else {
-                  return const Expanded(child: Center(child: Text("No books available for this category")));
+                  return Expanded(child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.book_outlined,
+                          size: 60.0,
+                          color: mainGreenColor,
+                        ),
+                        const SizedBox(height: 20.0),
+                        Text(
+                          "No books available for this category",
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey[700],
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 10.0),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            "Sorry, but we couldn't find any books in this category. Please check back later or explore other categories.",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: Colors.grey[500],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ));
                 }
               } else if (state is BookError) {
                 return Expanded(child: Center(child: Text(state.error)));
