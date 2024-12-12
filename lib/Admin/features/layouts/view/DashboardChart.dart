@@ -1,3 +1,4 @@
+import 'package:book_store/constant.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -11,19 +12,21 @@ class DashboardChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final chartData = data.map((e) {
       return BarChartGroupData(
-        x: data.indexOf(e), // Using index as x-axis position
+        x: data.indexOf(e),
         barRods: [
           BarChartRodData(
             toY: e.value.toDouble(),
-            color: Colors.blue,
-            width: 16,
-            borderRadius: BorderRadius.zero,
+            color: mainGreenColor,
+            width: 18,
+            borderRadius: BorderRadius.circular(8), // Smooth bar edges
           ),
         ],
       );
     }).toList();
 
     return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 4,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -34,30 +37,82 @@ class DashboardChart extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             SizedBox(
-              height: 200,
+              height: 250,
               child: BarChart(
                 BarChartData(
                   titlesData: FlTitlesData(
                     bottomTitles: AxisTitles(
                       sideTitles: SideTitles(
                         showTitles: true,
+                        reservedSize: 60,
                         getTitlesWidget: (value, meta) {
-                          // Return category name based on x-axis position (value)
-                          return Text(data[value.toInt()].label,
-                              style: const TextStyle(fontSize: 8));
+                          final label = data[value.toInt()].label;
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: RotatedBox(
+                              quarterTurns: 1, // Rotate labels vertically
+                              child: SizedBox(
+                                width: 40, // Set a fixed width to control wrapping
+                                child: Text(
+                                  label,
+                                  maxLines: 2, // Limit to 2 lines
+                                  overflow: TextOverflow.ellipsis, // Add ellipsis for truncation
+                                  style: const TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
                         },
-                        //margin: 8,
-                        //rotateAngle: 45, // Rotate labels to avoid overlap
                       ),
                     ),
-                    leftTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
+                    leftTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 30,
+                        getTitlesWidget: (value, meta) {
+                          return Text(
+                            value.toInt().toString(),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
-                  borderData: FlBorderData(show: true),
+                  barTouchData: BarTouchData(
+                    enabled: true,
+                    touchTooltipData: BarTouchTooltipData(
+                      //tooltipBgColor: Colors.black87,
+                      getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                        return BarTooltipItem(
+                          "${data[group.x.toInt()].label}\n${rod.toY.toInt()}",
+                          const TextStyle(color: Colors.white),
+                        );
+                      },
+                    ),
+                  ),
+                  borderData: FlBorderData(
+                    show: true,
+                    border: Border.all(color: Colors.grey.shade300, width: 1),
+                  ),
                   barGroups: chartData,
-                  gridData: const FlGridData(show: true),
-                  alignment: BarChartAlignment.spaceBetween,
+                  gridData: FlGridData(
+                    show: true,
+                    horizontalInterval: 10,
+                    drawHorizontalLine: true,
+                    getDrawingHorizontalLine: (value) => FlLine(
+                      color: Colors.grey.shade300,
+                      strokeWidth: 1,
+                    ),
+                  ),
+                  alignment: BarChartAlignment.spaceAround,
                 ),
               ),
             ),

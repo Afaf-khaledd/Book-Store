@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../manger/DashboardCubit/dashboard_cubit.dart';
 import 'DashboardCard.dart';
 import 'DashboardChart.dart';
+import 'PieChartWidget.dart';
 
 
 class DashboardPage extends StatefulWidget {
@@ -15,7 +16,6 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-
   @override
   Widget build(BuildContext context) {
     final dashboardCubit = context.read<DashboardCubit>();
@@ -73,13 +73,15 @@ class _DashboardPageState extends State<DashboardPage> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    DashboardChart(
+                    // First Chart
+                    PieChartWidget(
                       title: 'Popular Categories',
                       data: state.popularCategories.map((e) {
                         return ChartData(e['name'], e['count']);
                       }).toList(),
                     ),
                     const SizedBox(height: 16),
+                    // Second Chart
                     DashboardChart(
                       title: 'Best-Selling Books',
                       data: state.bestSellingBooks.map((e) {
