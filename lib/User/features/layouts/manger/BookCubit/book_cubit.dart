@@ -66,13 +66,13 @@ class BookCubit extends Cubit<BookState> {
     }
   }
 
-  void fetchBooksByCategory(String category) async {
+  void fetchBooksByCategory(String categoryId) async {
     emit(BookLoading());
     try {
-     final filteredBooks = _books.where((book) => book.category?.toLowerCase() == category.toLowerCase()).toList();
-     emit(CategoryBooksLoaded(filteredBooks, category));
+      final books = await bookRepository.fetchBooksByCategoryFromFirebase(categoryId);
+      emit(CategoryBooksLoaded(books, categoryId));
     } catch (e) {
-      emit(BookError("Failed to fetch books for category: $category"));
+      emit(BookError("Failed to fetch books for category: $categoryId"));
     }
   }
 

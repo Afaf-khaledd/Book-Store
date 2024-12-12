@@ -65,13 +65,21 @@ class RealBooksRepository implements BooksRepository {
   }
 
   @override
-  Future<List<BookModel>> fetchBooksByCategoryFromFirebase(String category) async {
+  Future<List<BookModel>> fetchBooksByCategoryFromFirebase(String categoryId) async {
     try {
       final snapshot = await _firestore
           .collection('books')
-          .where('category', isEqualTo: category)
+          .where('category', isEqualTo: categoryId)
           .get();
-      return snapshot.docs.map((doc) => BookModel.fromJson(doc.data())).toList();
+
+      if (snapshot.docs.isEmpty) {
+        print('No books found for category: $categoryId');
+        return [];
+      }
+
+      return snapshot.docs
+          .map((doc) => BookModel.fromJson(doc.data()))
+          .toList();
     } catch (e) {
       print('Error fetching books by category from Firebase: $e');
       return [];

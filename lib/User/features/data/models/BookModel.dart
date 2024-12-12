@@ -77,7 +77,7 @@ class BookModel {
     language = json['volumeInfo']?['language'] ?? json['language'];
     thumbnail = json['volumeInfo']?['imageLinks']?['thumbnail'] ?? json['thumbnail'];
     description = json['volumeInfo']?['description'] ?? json['description'];
-    price = (json['saleInfo']?['listPrice']?['amount'] as num?)?.toInt();
+    price = (json['saleInfo']?['listPrice']?['amount'] as num?)?.toInt() ?? json['price'];
     isbn = json['volumeInfo']?['industryIdentifiers']?.firstWhere(
           (identifier) => identifier['type'] == 'ISBN_13' || identifier['type'] == 'ISBN_10',
       orElse: () => {},

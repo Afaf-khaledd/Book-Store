@@ -1,34 +1,26 @@
 import 'package:book_store/Admin/features/data/repoistry/BooksAdminRepo.dart';
-import 'package:book_store/Admin/features/data/repoistry/BooksAdminRepo.dart';
-import 'package:book_store/Admin/features/data/repoistry/BooksAdminRepo.dart';
+
 import 'package:book_store/Admin/features/data/repoistry/CategoryRepository.dart';
-import 'package:book_store/Admin/features/data/repoistry/CategoryRepository.dart';
-import 'package:book_store/Admin/features/data/repoistry/CategoryRepository.dart';
+
 import 'package:book_store/Admin/features/data/repoistry/DashboardRepo.dart';
-import 'package:book_store/Admin/features/data/repoistry/DashboardRepo.dart';
-import 'package:book_store/Admin/features/data/repoistry/DashboardRepo.dart';
+
 import 'package:book_store/Admin/features/data/repoistry/OrderRepository.dart';
-import 'package:book_store/Admin/features/data/repoistry/OrderRepository.dart';
-import 'package:book_store/Admin/features/data/repoistry/OrderRepository.dart';
+
 import 'package:book_store/Admin/features/data/repoistry/ReviewsAdminRepo.dart';
-import 'package:book_store/Admin/features/data/repoistry/ReviewsAdminRepo.dart';
-import 'package:book_store/Admin/features/data/repoistry/ReviewsAdminRepo.dart';
+
 import 'package:book_store/Admin/features/data/repoistry/UserRepo.dart';
-import 'package:book_store/Admin/features/data/repoistry/UserRepo.dart';
-import 'package:book_store/Admin/features/data/repoistry/UserRepo.dart';
-import 'package:book_store/Admin/features/layouts/manger/BooksCubit/books_admin_cubit.dart';
+
 import 'package:book_store/Admin/features/layouts/manger/BooksCubit/books_admin_cubit.dart';
 import 'package:book_store/Admin/features/layouts/manger/CategoryCubit/category_cubit.dart';
 import 'package:book_store/Admin/features/layouts/manger/DashboardCubit/dashboard_cubit.dart';
-import 'package:book_store/Admin/features/layouts/manger/DashboardCubit/dashboard_cubit.dart';
-import 'package:book_store/Admin/features/layouts/manger/OrdersCubit/orders_cubit.dart';
 import 'package:book_store/Admin/features/layouts/manger/OrdersCubit/orders_cubit.dart';
 import 'package:book_store/Admin/features/layouts/manger/ReviewsACubit/reviews_admin_cubit.dart';
-import 'package:book_store/Admin/features/layouts/manger/ReviewsACubit/reviews_admin_cubit.dart';
-import 'package:book_store/Admin/features/layouts/manger/UserACubit/user_admin_cubit.dart';
 import 'package:book_store/Admin/features/layouts/manger/UserACubit/user_admin_cubit.dart';
 import 'package:book_store/User/features/data/repoistry/BooksRepo.dart';
+import 'package:book_store/User/features/data/repoistry/CategoriesURepo.dart';
+
 import 'package:book_store/User/features/layouts/manger/BookCubit/book_cubit.dart';
+import 'package:book_store/User/features/layouts/manger/CategoryUCubit/category_u_cubit.dart';
 import 'package:get_it/get_it.dart';
 import '../features/data/repoistry/AuthRepo.dart';
 import '../features/data/repoistry/CartRepo.dart';
@@ -75,4 +67,8 @@ void setupServiceLocator() {
 
   getIt.registerLazySingleton<DashboardRepository>(() => DashboardRepository());
   getIt.registerFactory<DashboardCubit>(() => DashboardCubit(getIt<DashboardRepository>()));
+
+  getIt.registerLazySingleton<CategoriesRepository>(() => CategoriesRepository());
+  getIt.registerFactory<CategoryUCubit>(() => CategoryUCubit(getIt<CategoriesRepository>()));
+
 }

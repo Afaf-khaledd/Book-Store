@@ -7,6 +7,7 @@ import '../../data/models/CartItemModel.dart';
 import '../../data/models/ReviewModel.dart';
 import '../manger/AuthCubit/auth_cubit.dart';
 import '../manger/CartCubit/cart_cubit.dart';
+import '../manger/CategoryUCubit/category_u_cubit.dart';
 import '../manger/ReviewCubit/review_cubit.dart';
 
 class BookDetailsPage extends StatefulWidget {
@@ -171,23 +172,33 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Genre',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        book.category ?? 'Unknown',
-                        style: const TextStyle(fontSize: 14, color: Colors.grey),
-                      ),
-                    ],
+                  BlocBuilder<CategoryUCubit, CategoryUState>(
+                    builder: (context, state) {
+                      String categoryName = 'Unknown'; // Default to 'Unknown' if not found
+
+                      if (state is CategoryULoaded) {
+                        categoryName = context.read<CategoryUCubit>().getCategoryName(book.category ?? '');
+                      }
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Genre',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            categoryName,
+                            style: const TextStyle(fontSize: 14, color: Colors.grey),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                   Container(
                     width: 1,

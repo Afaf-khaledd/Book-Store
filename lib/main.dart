@@ -1,14 +1,12 @@
 import 'package:book_store/Admin/features/layouts/manger/BooksCubit/books_admin_cubit.dart';
 import 'package:book_store/Admin/features/layouts/manger/CategoryCubit/category_cubit.dart';
 import 'package:book_store/Admin/features/layouts/manger/DashboardCubit/dashboard_cubit.dart';
-import 'package:book_store/Admin/features/layouts/manger/DashboardCubit/dashboard_cubit.dart';
 import 'package:book_store/Admin/features/layouts/manger/OrdersCubit/orders_cubit.dart';
-import 'package:book_store/Admin/features/layouts/manger/OrdersCubit/orders_cubit.dart';
-import 'package:book_store/Admin/features/layouts/manger/ReviewsACubit/reviews_admin_cubit.dart';
 import 'package:book_store/Admin/features/layouts/manger/ReviewsACubit/reviews_admin_cubit.dart';
 import 'package:book_store/Admin/features/layouts/manger/UserACubit/user_admin_cubit.dart';
 import 'package:book_store/User/features/layouts/manger/BookCubit/book_cubit.dart';
 import 'package:book_store/User/features/layouts/manger/CartCubit/cart_cubit.dart';
+import 'package:book_store/User/features/layouts/manger/CategoryUCubit/category_u_cubit.dart';
 import 'package:book_store/User/features/layouts/manger/ReviewCubit/review_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +62,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<DashboardCubit>(
           create: (_) => getIt<DashboardCubit>()..fetchDashboardData(),
+        ),
+        BlocProvider<CategoryUCubit>(
+          create: (_) => getIt<CategoryUCubit>(),
         ),
       ],
       child: MaterialApp(//.router
