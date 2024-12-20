@@ -36,10 +36,8 @@ class OrderRepository{
       final orderData = orderSnapshot.data() as Map<String, dynamic>;
       final items = orderData['items'] as List<dynamic>;
 
-      // Update the order status
       await orderRef.update({'status': status});
 
-      // Update the notifications collection
       final notificationRef = _firestore.collection('notifications');
       if (status == 'confirmed' || status == 'shipped') {
         await notificationRef.doc(orderId).set({'orderId': orderId, 'userId': userId, 'status': status});
@@ -48,14 +46,12 @@ class OrderRepository{
       }
 
       if (status == 'confirmed') {
-        // Loop through each order item and update the book availability and sales count
         for (var item in items) {
-          final bookId = item['bookId']; // Assuming each item has a 'bookId'
-          final quantity = item['quantity']; // Assuming each item has a 'quantity' field
+          final bookId = item['bookId'];
+          final quantity = item['quantity'];
 
           final bookRef = _firestore.collection('books').doc(bookId);
 
-          // Fetch the book document
           final bookSnapshot = await bookRef.get();
 
           if (bookSnapshot.exists) {
@@ -63,7 +59,6 @@ class OrderRepository{
             final currentAvailability = bookData['availability'] ?? 0;
             final currentSalesCount = bookData['saleCount'] ?? 0;
 
-            // Decrease availability by the ordered quantity and increase salesCount by the ordered quantity
             await bookRef.update({
               'availability': currentAvailability - quantity,
               'saleCount': currentSalesCount + quantity,

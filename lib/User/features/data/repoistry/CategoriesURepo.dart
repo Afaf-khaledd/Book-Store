@@ -8,9 +8,8 @@ class CategoriesRepository{
     final snapshot = await _firestore.collection('categories').get();
     return snapshot.docs.map((doc) {
       final data = doc.data();
-      data['id'] = doc.id; // Add the document ID
+      data['id'] = doc.id;
       return data;
     }).toList();
   }
-
 }

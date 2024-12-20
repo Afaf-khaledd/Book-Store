@@ -20,6 +20,7 @@ class CategoryPage extends StatelessWidget {
           title: Text(category == null ? 'Add Category' : 'Update Category'),
           content: TextField(
             controller: controller,
+            cursorColor: mainGreenColor,
             decoration: const InputDecoration(hintText: 'Category Name',
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(

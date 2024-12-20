@@ -1,4 +1,3 @@
-import 'package:book_store/Admin/features/layouts/view/EditBookPage.dart';
 import 'package:book_store/constant.dart';
 import 'package:flutter/material.dart';
 
@@ -10,11 +9,11 @@ class BookCard extends StatelessWidget {
   final VoidCallback onEdit;
 
   const BookCard({
-    Key? key,
+    super.key,
     required this.book,
     required this.onDelete,
     required this.onEdit,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

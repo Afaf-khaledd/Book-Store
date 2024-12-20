@@ -12,13 +12,6 @@ class CategoryULoaded extends CategoryUState {
   CategoryULoaded({required this.categories});
 }
 
-/*class BookULoading extends CategoryUState {}
-
-class BookULoaded extends CategoryUState {
-  final List<BookModel> books;
-  BookULoaded({required this.books});
-}*/
-
 class CategoryUError extends CategoryUState {
   final String message;
   CategoryUError({required this.message});

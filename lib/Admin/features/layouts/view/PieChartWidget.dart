@@ -110,7 +110,6 @@ class PieChartWidget extends StatelessWidget {
   }
 
   Color _getColor(int index) {
-    // Assign colors dynamically based on index
     final colors = [
       Colors.red,
       Colors.green,
@@ -118,6 +117,11 @@ class PieChartWidget extends StatelessWidget {
       Colors.orange,
       Colors.purple,
       Colors.cyan,
+      Colors.yellow,
+      Colors.pink,
+      Colors.teal,
+      Colors.indigo,
+      Colors.brown
     ];
     return colors[index % colors.length];
   }

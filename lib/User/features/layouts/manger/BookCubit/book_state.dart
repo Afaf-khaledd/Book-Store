@@ -21,8 +21,3 @@ class CategoryBooksLoaded extends BookState {
   final String category;
   CategoryBooksLoaded(this.books, this.category);
 }
-class FavoritesLoaded extends BookState {
-  final List<BookModel> favorites;
-
-  FavoritesLoaded(this.favorites);
-}

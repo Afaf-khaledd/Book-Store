@@ -123,6 +123,7 @@ class _EditBookPageState extends State<EditBookPage> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _titleController,
+                cursorColor: mainGreenColor,
                 decoration: const InputDecoration(labelText: "Title",
                   labelStyle: TextStyle(color: mainGreenColor),
                   focusedBorder: UnderlineInputBorder(
@@ -148,6 +149,7 @@ class _EditBookPageState extends State<EditBookPage> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _authorsController,
+                cursorColor: mainGreenColor,
                 decoration: const InputDecoration(labelText: "Authors (comma-separated)",
                   labelStyle: TextStyle(color: mainGreenColor),
                   focusedBorder: UnderlineInputBorder(
@@ -212,6 +214,7 @@ class _EditBookPageState extends State<EditBookPage> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _priceController,
+                cursorColor: mainGreenColor,
                 decoration: const InputDecoration(labelText: "Price",
                   labelStyle: TextStyle(color: mainGreenColor),
                   focusedBorder: UnderlineInputBorder(
@@ -241,6 +244,7 @@ class _EditBookPageState extends State<EditBookPage> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _availabilityController,
+                cursorColor: mainGreenColor,
                 decoration: const InputDecoration(labelText: "Availability",
                   labelStyle: TextStyle(color: mainGreenColor),
                   focusedBorder: UnderlineInputBorder(
@@ -269,6 +273,7 @@ class _EditBookPageState extends State<EditBookPage> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _descriptionController,
+                cursorColor: mainGreenColor,
                 decoration: const InputDecoration(labelText: "Description",
                   labelStyle: TextStyle(color: mainGreenColor),
                   focusedBorder: UnderlineInputBorder(

@@ -8,7 +8,7 @@ class OrderRepository{
 
   Future<void> placeOrder(String userId, List<OrderItem> cartItems, double totalPrice) async {
     try {
-      final orderId = _firestore.collection('orders').doc().id; // Generate order ID
+      final orderId = _firestore.collection('orders').doc().id;
       final DateTime orderDate = DateTime.now();
 
       await _firestore.collection('orders').doc(orderId).set({

@@ -32,15 +32,12 @@ class DashboardRepository {
   }
 
   Future<List<Map<String, dynamic>>> fetchPopularCategories() async {
-    // Step 1: Get orders
+
     final ordersSnapshot = await _firestore
         .collection('orders')
         .get(const GetOptions(source: Source.server));
 
-    // Step 2: Initialize category count map
     final Map<String, int> categoryCounts = {};
-
-    // Step 3: Loop through each order and count categories from book items
     for (var orderDoc in ordersSnapshot.docs) {
       final orderData = orderDoc.data();
       final List<dynamic> items = orderData['items'] ?? [];
@@ -49,7 +46,6 @@ class DashboardRepository {
         final bookId = item['bookId'];
 
         if (bookId != null) {
-          // Step 4: Fetch the book and its category
           final bookDoc = await _firestore.collection('books').doc(bookId).get();
 
           if (bookDoc.exists) {
@@ -63,8 +59,6 @@ class DashboardRepository {
         }
       }
     }
-
-    // Step 5: Fetch category names from the categories collection
     final categoriesSnapshot = await _firestore
         .collection('categories')
         .get(const GetOptions(source: Source.server));
@@ -76,9 +70,7 @@ class DashboardRepository {
       return {'id': id, 'name': name, 'count': count};
     }).toList();
 
-    // Step 6: Sort categories by count in descending order
     categoryList.sort((a, b) => b['count'].compareTo(a['count']));
-
     return categoryList;
   }
 

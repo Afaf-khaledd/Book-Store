@@ -1,4 +1,5 @@
 import 'package:book_store/User/features/layouts/view/LoadingIndicator.dart';
+import 'package:book_store/User/features/layouts/view/OrderHistoryPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,7 +10,7 @@ import '../manger/NotificationCubit/notification_cubit.dart';
 class NotificationPage extends StatelessWidget {
   final String userId;
 
-  const NotificationPage({Key? key, required this.userId}) : super(key: key);
+  const NotificationPage({super.key, required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +54,12 @@ class NotificationPage extends StatelessWidget {
                     child: ListTile(
                       title: Text('Order ID: ${notification.orderId}'),
                       subtitle: Text('Status: ${notification.status}'),
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute<void>(
+                          builder: (BuildContext context) => const OrderHistoryPage(),
+                        ),
+                        );
+                      },
                     ),
                   );
                 },

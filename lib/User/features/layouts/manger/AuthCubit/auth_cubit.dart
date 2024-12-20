@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:book_store/User/core/SharedPreference.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 
+import '../../../../../core/SharedPreference.dart';
 import '../../../data/models/UserModel.dart';
 import '../../../data/repoistry/AuthRepo.dart';
 
@@ -74,19 +74,6 @@ class AuthCubit extends Cubit<AuthState> {
       SharedPreference.instance.setRememberMe(false);
     } catch (e) {
       emit(AuthLogoutError("Failed to logout: $e"));
-    }
-  }
-  Future<void> loginWithGoogle() async {
-    emit(AuthLoading());
-    try {
-      final user = await authRepository.loginWithGoogle();
-      if (user != null) {
-        emit(AuthSuccess("Google login successful!"));
-      } else {
-        emit(AuthError("Google login canceled."));
-      }
-    } catch (e) {
-      emit(AuthError("Google login failed: $e"));
     }
   }
 }

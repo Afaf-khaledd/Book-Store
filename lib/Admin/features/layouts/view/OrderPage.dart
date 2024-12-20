@@ -112,11 +112,11 @@ class OrderPage extends StatelessWidget {
                           return Card(
                             margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0), // Rounded corners for a smooth design
+                              borderRadius: BorderRadius.circular(12.0),
                             ),
-                            elevation: 4.0, // Adding elevation for shadow effect
+                            elevation: 4.0,
                             child: Padding(
-                              padding: const EdgeInsets.all(16.0), // Padding inside the card
+                              padding: const EdgeInsets.all(16.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -129,7 +129,7 @@ class OrderPage extends StatelessWidget {
                                       color: Colors.black87,
                                     ),
                                   ),
-                                  const SizedBox(height: 8.0), // Adding space between title and content
+                                  const SizedBox(height: 8.0),
                                   // Date, Total, and Status
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

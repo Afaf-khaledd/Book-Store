@@ -14,7 +14,7 @@ class BookModel {
   String? isbn;
   int? availability;
   int? popularity;
-  int? salesCount; // Add the salesCount field
+  int? salesCount;
 
   BookModel copyWith({
     String? id,
@@ -30,7 +30,7 @@ class BookModel {
     String? isbn,
     int? availability,
     int? popularity,
-    int? salesCount, // Include salesCount in copyWith
+    int? salesCount,
   }) {
     return BookModel(
       id: id ?? this.id,
@@ -46,7 +46,7 @@ class BookModel {
       isbn: isbn ?? this.isbn,
       availability: availability ?? this.availability,
       popularity: popularity ?? this.popularity,
-      salesCount: salesCount ?? this.salesCount, // Add salesCount to copyWith
+      salesCount: salesCount ?? this.salesCount,
     );
   }
 
@@ -64,7 +64,7 @@ class BookModel {
     this.isbn,
     this.availability,
     this.popularity,
-    this.salesCount, // Add salesCount to constructor
+    this.salesCount,
   });
 
   BookModel.fromJson(Map<String, dynamic> json) {
@@ -84,7 +84,7 @@ class BookModel {
     )['identifier'] ?? json['isbn'];
     availability = json['availability'] ?? 0;
     popularity = json['popularity'] ?? 0;
-    salesCount = json['salesCount'] ?? 0; // Ensure salesCount is loaded from JSON
+    salesCount = json['salesCount'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {
@@ -102,7 +102,7 @@ class BookModel {
       'isbn': isbn,
       'availability': availability,
       'popularity': popularity,
-      'salesCount': salesCount, // Include salesCount in toJson
+      'salesCount': salesCount,
     };
   }
 }

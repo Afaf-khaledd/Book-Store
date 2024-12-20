@@ -30,7 +30,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(height: 25),
+            const SizedBox(height: 40),
             Expanded(
               child: PageView(
                 controller: _pageController,
@@ -38,17 +38,17 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   OnboardingPageBody(
                     title: "Welcome To World Book",
                     description: "Discover a world of stories and knowledge at your fingertips. You can browse an extensive library of books spanning genres. Our application ensures an enjoyable browsing experience tailored just for you.",
-                    url: 'images/gs11.png',
+                    url: 'images/4.png',
                   ),
                   OnboardingPageBody(
                     title: "AnyTime, AnyWhere",
                     description: "Personalize your experience, track your orders, and manage your account with ease. With just a few clicks, your next great read will be on its way to your doorstep.",
-                    url: 'images/gs2.jpg',
+                    url: 'images/2.png',
                   ),
                   OnboardingPageBody(
                     title: "Stay Connected",
                     description: "Leave reviews for books you've enjoyed. Your feedback not only helps others but also builds a community of book enthusiasts who share your passion.",
-                    url: 'images/gs3.jpg',
+                    url: 'images/gs11.png',
                   ),
                 ],
               ),

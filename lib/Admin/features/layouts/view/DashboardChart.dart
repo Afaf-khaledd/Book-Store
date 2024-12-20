@@ -50,13 +50,13 @@ class DashboardChart extends StatelessWidget {
                           return Padding(
                             padding: const EdgeInsets.only(top: 8.0),
                             child: RotatedBox(
-                              quarterTurns: 1, // Rotate labels vertically
+                              quarterTurns: 1,
                               child: SizedBox(
-                                width: 40, // Set a fixed width to control wrapping
+                                width: 40,
                                 child: Text(
                                   label,
-                                  maxLines: 2, // Limit to 2 lines
-                                  overflow: TextOverflow.ellipsis, // Add ellipsis for truncation
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                     fontSize: 10,
                                     fontWeight: FontWeight.w500,
@@ -124,7 +124,7 @@ class DashboardChart extends StatelessWidget {
 }
 
 class ChartData {
-  final String label; // Name of the category (for x-axis)
+  final String label;
   final int value;
 
   ChartData(this.label, this.value);

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../constant.dart';
-import '../../../core/SharedPreference.dart';
-import '../../../core/Validators.dart';
+import '../../../../core/SharedPreference.dart';
+import '../../../../core/Validators.dart';
 import '../../data/models/UserModel.dart';
 import '../manger/AuthCubit/auth_cubit.dart';
 import 'MainNavPage.dart';
@@ -65,7 +65,6 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,11 +88,9 @@ class _SignUpState extends State<SignUp> {
               } else if (state is AuthSuccess) {
                 Navigator.pop(context);
                 Fluttertoast.showToast(msg: state.message,backgroundColor: Colors.green);
-                //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
               } else if (state is AuthError) {
                 Navigator.pop(context);
                 Fluttertoast.showToast(msg: state.error,backgroundColor: Colors.redAccent);
-                //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
               }
             },
             child: Form(
@@ -101,9 +98,10 @@ class _SignUpState extends State<SignUp> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
+                const SizedBox(height: 50),
                 TextFormField(
                   controller: _usernameController,
+                  cursorColor: mainGreenColor,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.person),
                     labelText: "Username",labelStyle: const TextStyle(color: mainGreenColor,fontWeight: FontWeight.w400),
@@ -122,6 +120,7 @@ class _SignUpState extends State<SignUp> {
 
                 TextFormField(
                   controller: _emailController,
+                  cursorColor: mainGreenColor,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.email),
                     labelText: "Email",
@@ -140,6 +139,7 @@ class _SignUpState extends State<SignUp> {
 
                 TextFormField(
                   controller: _passwordController,
+                  cursorColor: mainGreenColor,
                   obscureText: !_isPasswordVisible,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock),
@@ -168,6 +168,7 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: _phoneController,
+                  cursorColor: mainGreenColor,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.phone),
                     labelText: "Phone Number",labelStyle: const TextStyle(color: mainGreenColor,fontWeight: FontWeight.w400),
@@ -185,6 +186,7 @@ class _SignUpState extends State<SignUp> {
 
                 TextFormField(
                   controller: _addressController,
+                  cursorColor: mainGreenColor,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.home),
                     labelText: "Address",labelStyle: const TextStyle(color: mainGreenColor,fontWeight: FontWeight.w400),
@@ -202,6 +204,7 @@ class _SignUpState extends State<SignUp> {
 
                 TextFormField(
                   controller: _dateController,
+                  cursorColor: mainGreenColor,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.calendar_month),
                     labelText: "Birthday Date",labelStyle: const TextStyle(color: mainGreenColor,fontWeight: FontWeight.w400),
@@ -271,24 +274,6 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      child: Image.asset('images/facebook.png', width: 50),
-                      onTap: () {
-                       // context.read<AuthCubit>().loginWithFacebook();
-                      },
-                    ),
-                    const SizedBox(width: 20),
-                    InkWell(
-                      child: Image.asset('images/google.png', width: 50),
-                      onTap: () {
-                        context.read<AuthCubit>().loginWithGoogle();
-                      },
-                    ),
-                  ],
-                ),
                 Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

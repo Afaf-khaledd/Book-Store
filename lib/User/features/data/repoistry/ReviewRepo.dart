@@ -39,7 +39,7 @@ class ReviewRepository {
         await _firestore
             .collection('books')
             .doc(review.bookId)
-            .update({'rating': avgRating.toInt()});
+            .update({'popularity': avgRating.toInt()});
       }
     } catch (e) {
       throw Exception('Failed to submit review: $e');

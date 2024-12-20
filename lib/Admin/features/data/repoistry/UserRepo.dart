@@ -1,4 +1,3 @@
-import 'package:book_store/User/features/data/models/UserModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserRepository{

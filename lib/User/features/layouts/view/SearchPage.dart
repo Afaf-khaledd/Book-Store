@@ -74,6 +74,7 @@ class _SearchPageState extends State<SearchPage> {
       if (barcodeResult != "-1") {
         setState(() {
           searchController.text = barcodeResult;
+          searchQuery = barcodeResult;
         });
       }
     } catch (e) {
@@ -92,6 +93,7 @@ class _SearchPageState extends State<SearchPage> {
           height: 65,
           child: TextField(
             controller: searchController,
+            cursorColor: mainGreenColor,
             decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search_rounded),
                 labelText: "Search",labelStyle: const TextStyle(color: mainGreenColor,fontWeight: FontWeight.w400),

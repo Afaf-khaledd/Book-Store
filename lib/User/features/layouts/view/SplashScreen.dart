@@ -2,7 +2,7 @@ import 'package:book_store/Admin/features/layouts/view/Dashboard.dart';
 import 'package:book_store/User/features/layouts/view/OnboardingPage.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/SharedPreference.dart';
+import '../../../../core/SharedPreference.dart';
 import 'MainNavPage.dart';
 
 class SplashPage extends StatefulWidget {

@@ -1,4 +1,5 @@
 import 'package:book_store/User/features/data/models/BookModel.dart';
+import 'package:book_store/User/features/layouts/view/LoadingIndicator.dart';
 import 'package:book_store/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -279,7 +280,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
             BlocBuilder<ReviewCubit, ReviewState>(
               builder: (context, state) {
                 if (state is ReviewLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: NewLoadingIndicator());
                 } else if (state is ReviewLoaded) {
                   final reviews = state.reviews;
                   if (reviews.isEmpty) {
@@ -410,6 +411,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                   const SizedBox(height: 12),
                   TextField(
                     controller: _reviewController,
+                    cursorColor: mainGreenColor,
                     maxLines: 3,
                     decoration: InputDecoration(
                       hintText: 'Share your thoughts...',

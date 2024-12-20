@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/models/CartItemModel.dart';
 import '../../../data/repoistry/CartRepo.dart';
-import '../AuthCubit/auth_cubit.dart';
 
 part 'cart_state.dart';
 

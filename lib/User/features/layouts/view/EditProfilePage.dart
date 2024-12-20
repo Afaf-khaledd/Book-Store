@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../constant.dart';
-import '../../../core/Validators.dart';
+import '../../../../core/Validators.dart';
 import '../../data/models/UserModel.dart';
 import '../manger/AuthCubit/auth_cubit.dart';
 
@@ -125,6 +125,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             children: [
               TextFormField(
                 controller: _usernameController,
+                cursorColor: mainGreenColor,
                 decoration: const InputDecoration(
                   labelText: 'Username',
                   prefixIcon: Icon(Icons.person),
@@ -147,6 +148,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               const SizedBox(height: 10,),
               TextFormField(
                 controller: _emailController,
+                cursorColor: mainGreenColor,
                 readOnly: true,
                 decoration: const InputDecoration(
                   labelText: 'Email',
@@ -170,6 +172,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
               TextFormField(
                 controller: _phoneController,
+                cursorColor: mainGreenColor,
                 decoration: const InputDecoration(
                   labelText: 'Phone',
                   prefixIcon: Icon(Icons.phone),
@@ -193,6 +196,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
               TextFormField(
                 controller: _addressController,
+                cursorColor: mainGreenColor,
                 decoration: const InputDecoration(
                   labelText: 'Address',
                   prefixIcon: Icon(Icons.home),
@@ -217,6 +221,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               TextFormField(
                 controller: _birthdayController,
                 readOnly: true,
+                cursorColor: mainGreenColor,
                 decoration: InputDecoration(
                   labelText: 'Birthday',
                   prefixIcon: const Icon(Icons.calendar_month),
@@ -247,6 +252,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               TextFormField(
                 controller: _passwordController,
                 obscureText: _isPasswordHidden,
+                cursorColor: mainGreenColor,
                 decoration: InputDecoration(
                   labelText: 'New Password (optional)',
                   prefixIcon: const Icon(Icons.lock),

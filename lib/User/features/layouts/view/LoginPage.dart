@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../../constant.dart';
-import '../../../core/SharedPreference.dart';
-import '../../../core/Validators.dart';
+import '../../../../core/SharedPreference.dart';
+import '../../../../core/Validators.dart';
 import '../manger/AuthCubit/auth_cubit.dart';
 import 'LoadingIndicator.dart';
 import 'SignUpPage.dart';
@@ -39,25 +39,13 @@ class _LoginPageState extends State<LoginPage> {
       listener: (context, state) {
         if (state is AuthSuccess) {
           Fluttertoast.showToast(msg: state.message,backgroundColor: Colors.green);
-          /*ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );*/
         } else if (state is AuthError) {
           Fluttertoast.showToast(msg: state.error,backgroundColor: Colors.redAccent);
-          /*ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.error)),
-          );*/
         }
         else if (state is AuthResetPasswordSuccess) {
           Fluttertoast.showToast(msg: "Password reset email sent", backgroundColor: Colors.orangeAccent);
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Password reset email sent")),
-          );
         } else if (state is AuthResetPasswordError) {
           Fluttertoast.showToast(msg: state.error,backgroundColor: Colors.redAccent);
-          /*ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.error)),
-          );*/
         }
       },
       builder: (context, state) {
@@ -80,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 70),
                     TextFormField(
                       controller: _emailController,
+                      cursorColor: mainGreenColor,
                       decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.email),
                         labelText: "Email",
@@ -96,6 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
+                      cursorColor: mainGreenColor,
                       controller: _passwordController,
                       obscureText: !_isPasswordVisible,
                       decoration: InputDecoration(
@@ -192,25 +182,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     const SizedBox(height: 50),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          child: Image.asset('images/facebook.png', width: 50),
-                          onTap: () {
-                           // context.read<AuthCubit>().loginWithFacebook();
-                          },
-                        ),
-                        const SizedBox(width: 20),
-                        InkWell(
-                          child: Image.asset('images/google.png', width: 50),
-                          onTap: () {
-                           context.read<AuthCubit>().loginWithGoogle();
-                          },
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 40),
                     Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

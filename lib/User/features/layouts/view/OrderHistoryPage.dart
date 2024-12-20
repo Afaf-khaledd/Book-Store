@@ -1,4 +1,5 @@
 import 'package:book_store/User/features/data/repoistry/OrderRepo.dart';
+import 'package:book_store/User/features/layouts/view/LoadingIndicator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +19,6 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
   late UserModel user;
   final OrderRepository orderService = OrderRepository();
 
-
   @override
   void initState() {
     super.initState();
@@ -33,7 +33,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
         return Colors.green;
       case 'confirmed':
         return Colors.blue;
-      case 'canceled':
+      case 'cancelled':
         return Colors.red;
       default:
         return Colors.black;
@@ -55,7 +55,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: NewLoadingIndicator());
           }
 
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
