@@ -1,4 +1,4 @@
-# book_store
+# book_store_management
 
 A new Flutter project.
 
