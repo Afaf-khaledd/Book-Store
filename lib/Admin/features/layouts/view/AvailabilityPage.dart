@@ -1,5 +1,6 @@
 import 'package:book_store/Admin/features/layouts/view/DrawerWidget.dart';
 import 'package:book_store/Admin/features/layouts/view/EditBookPage.dart';
+import 'package:book_store/User/features/layouts/view/LoadingIndicator.dart';
 import 'package:book_store/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +17,14 @@ class AvailabilityPage extends StatefulWidget {
 
 class _AvailabilityPageState extends State<AvailabilityPage> {
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (context.read<BooksAdminCubit>().state is! LowStockBooksLoaded) {
+      context.read<BooksAdminCubit>().fetchLowStockBooks();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -26,7 +35,7 @@ class _AvailabilityPageState extends State<AvailabilityPage> {
       body: BlocBuilder<BooksAdminCubit, BooksAdminState>(
         builder: (context, state) {
           if (state is BookLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: NewLoadingIndicator());
           } else if (state is LowStockBooksLoaded) {
             final books = state.lowStockBooks;
             if (books.isEmpty) {
@@ -125,6 +134,7 @@ class _AvailabilityPageState extends State<AvailabilityPage> {
       drawer: const DrawerWidget(),
     );
   }
+
   Widget _placeholderAvatar(BookModel book) {
     return CircleAvatar(
       radius: 30,

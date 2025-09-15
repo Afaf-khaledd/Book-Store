@@ -307,6 +307,6 @@ class _SignUpState extends State<SignUp> {
     setState(() {
       _rememberMe = value;
     });
-    await SharedPreference.instance.setRememberMe(value);
+    await SharedPreference().setRememberMe(value);
   }
 }

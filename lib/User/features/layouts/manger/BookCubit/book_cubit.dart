@@ -17,7 +17,6 @@ class BookCubit extends Cubit<BookState> {
   Future<void> initializeBooks() async {
     emit(BookLoading());
     try {
-      // Fetch books from Firebase
       _books = await bookRepository.fetchBooksFromFirebase();
 
       if (_books.isEmpty) {
@@ -38,7 +37,6 @@ class BookCubit extends Cubit<BookState> {
         final booksFromApi = await bookRepository.fetchBooksFromApi(categories: categories);
 
         if (booksFromApi.isNotEmpty) {
-          // Save books to Firebase
           await bookRepository.saveBooksToFirebase(booksFromApi);
           emit(BookLoaded(booksFromApi));
         } else {

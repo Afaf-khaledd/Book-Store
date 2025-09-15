@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DashboardRepository {
+  // singleton, template
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<int> fetchTotalUsers() async {

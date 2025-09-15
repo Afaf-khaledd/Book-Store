@@ -1,3 +1,4 @@
+import 'package:book_store/User/features/layouts/view/LoadingIndicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,7 +24,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
       body: BlocBuilder<ReviewsAdminCubit, ReviewsAdminState>(
         builder: (context, state) {
           if (state is ReviewsAdminLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: NewLoadingIndicator());
           } else if (state is ReviewsAdminLoaded) {
             return ListView.separated(
               padding: const EdgeInsets.all(10),

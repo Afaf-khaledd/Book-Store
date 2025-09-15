@@ -8,8 +8,22 @@ import '../../../../Admin/features/layouts/view/BookCard.dart';
 import '../../../../constant.dart';
 import '../manger/BooksCubit/books_admin_cubit.dart';
 
-class BooksPage extends StatelessWidget {
+class BooksPage extends StatefulWidget {
   const BooksPage({super.key});
+
+  @override
+  State<BooksPage> createState() => _BooksPageState();
+}
+
+class _BooksPageState extends State<BooksPage> {
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (context.read<BooksAdminCubit>().state is! BookLoaded) {
+      context.read<BooksAdminCubit>().fetchBooks();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

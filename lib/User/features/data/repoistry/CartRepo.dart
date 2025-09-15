@@ -23,14 +23,15 @@ class CartRepository {
       final cartRef = _firestore.collection('users').doc(userId).collection('cart');
       final cartItemDoc = cartRef.doc(item.bookId);
 
-      final existingItem = await cartItemDoc.get();
+      /*final existingItem = await cartItemDoc.get();
       if (existingItem.exists) {
         await cartItemDoc.update({
           'quantity': FieldValue.increment(item.quantity),
         });
       } else {
-        await cartItemDoc.set(item.toJson());
-      }
+      }*/
+
+      await cartItemDoc.set(item.toJson());
       await _updateTotalPrice(userId);
     } catch (e) {
       throw Exception('Failed to add item to cart: $e');

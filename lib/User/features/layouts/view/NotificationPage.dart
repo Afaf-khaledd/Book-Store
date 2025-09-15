@@ -54,6 +54,7 @@ class NotificationPage extends StatelessWidget {
                     child: ListTile(
                       title: Text('Order ID: ${notification.orderId}'),
                       subtitle: Text('Status: ${notification.status}'),
+                      trailing: const Icon(Icons.arrow_forward_ios_rounded,color: Colors.black54,size: 20,),
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute<void>(
                           builder: (BuildContext context) => const OrderHistoryPage(),

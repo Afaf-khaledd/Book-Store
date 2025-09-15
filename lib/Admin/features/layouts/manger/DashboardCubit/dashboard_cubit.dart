@@ -6,6 +6,7 @@ import '../../../data/repoistry/DashboardRepo.dart';
 part 'dashboard_state.dart';
 
 class DashboardCubit extends Cubit<DashboardState> {
+  // state observer
   final DashboardRepository dashboardRepository;
 
   DashboardCubit(this.dashboardRepository) : super(DashboardInitial());

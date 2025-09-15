@@ -1,10 +1,9 @@
-import 'package:book_store/Admin/features/layouts/view/Dashboard.dart';
-import 'package:book_store/User/features/layouts/view/MainNavPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../../constant.dart';
+import '../../../../core/NavigationFactory.dart';
 import '../../../../core/SharedPreference.dart';
 import '../../../../core/Validators.dart';
 import '../manger/AuthCubit/auth_cubit.dart';
@@ -160,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                               _emailController.text,
                               _passwordController.text,
                             );
-                            if(_emailController.text.compareTo("admin@store.com")==0 && _passwordController.text.compareTo("admin1")==0){
+                            /*if(_emailController.text.compareTo("admin@store.com")==0 && _passwordController.text.compareTo("admin1")==0){
                               _isAdmin(true);
                               Navigator.pushReplacement(context, MaterialPageRoute<void>(
                                 builder: (BuildContext context) => const DashboardPage(),
@@ -172,7 +171,20 @@ class _LoginPageState extends State<LoginPage> {
                               builder: (BuildContext context) => const MainNavPage(),
                             ),
                             );
-                          }
+                          }*/
+                            isAdmin = (_emailController.text == "admin@store.com" && _passwordController.text == "admin1");
+                            _isAdmin(isAdmin);
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NavigationFactory.getNextPage(
+                                  rememberMe: _rememberMe,
+                                  isAdmin: isAdmin,
+                                  email: _emailController.text,
+                                  password: _passwordController.text,
+                                ),
+                              ),
+                            );
                           }
                         },
                         child: const Text(
@@ -218,13 +230,13 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       _rememberMe = value;
     });
-    await SharedPreference.instance.setRememberMe(value);
+    await SharedPreference().setRememberMe(value);
   }
   void _isAdmin(bool value) async {
     setState(() {
       isAdmin = value;
     });
-    await SharedPreference.instance.setIsAdmin(value);
+    await SharedPreference().setIsAdmin(value);
   }
 
   void _resetPassword() {

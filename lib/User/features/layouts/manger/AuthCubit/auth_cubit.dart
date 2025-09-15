@@ -1,7 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:meta/meta.dart';
-
 import '../../../../../core/SharedPreference.dart';
 import '../../../data/models/UserModel.dart';
 import '../../../data/repoistry/AuthRepo.dart';
@@ -71,7 +69,7 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       await authRepository.logout();
       emit(AuthLogoutSuccess());
-      SharedPreference.instance.setRememberMe(false);
+      SharedPreference().setRememberMe(false);
     } catch (e) {
       emit(AuthLogoutError("Failed to logout: $e"));
     }

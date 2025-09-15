@@ -2,6 +2,7 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../constant.dart';
 import '../../../../core/Validators.dart';
 import '../../data/models/UserModel.dart';
@@ -88,13 +89,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
         await BlocProvider.of<AuthCubit>(context)
             .changePassword(_passwordController.text);
       }
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Profile updated successfully!'),
-      ));
+      Fluttertoast.showToast(msg: "Data Updated!",backgroundColor: Colors.green);
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Error updating profile: $e'),
-      ));
+      Fluttertoast.showToast(msg: 'Error updating profile: $e',backgroundColor: Colors.redAccent);
     }
   }
 

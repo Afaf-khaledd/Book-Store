@@ -1,3 +1,4 @@
+
 import 'package:book_store/User/features/layouts/view/LoadingIndicator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -209,7 +210,7 @@ class _SearchPageState extends State<SearchPage> {
                   }
                   final books = snapshot.data!.docs.where((doc) {
                     final title = doc['title'].toString().toLowerCase();
-                    final img = doc['thumbnail'];
+                   // final img = doc['thumbnail'];
                     final authors =
                     doc['authors'].toString().toLowerCase();
                     final isbn = doc['isbn'].toString();

@@ -416,7 +416,11 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                     decoration: InputDecoration(
                       hintText: 'Share your thoughts...',
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        borderSide: const BorderSide(color: mainGreenColor, width: 2.0),
                       ),
                     ),
                   ),

@@ -2,7 +2,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreference{
   SharedPreference._privateConstructor();
-  static final SharedPreference instance = SharedPreference._privateConstructor();
+  static final SharedPreference _instance = SharedPreference._privateConstructor();
+  factory SharedPreference() {
+    return _instance;
+  }
 
   Future<void> setRememberMe(bool value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

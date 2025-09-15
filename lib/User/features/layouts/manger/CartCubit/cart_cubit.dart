@@ -11,7 +11,6 @@ class CartCubit extends Cubit<CartState> {
   CartCubit(this._cartRepository) : super(CartInitial());
 
   Future<void> fetchCart(String userId) async {
-    emit(CartLoading());
     try {
       final items = await _cartRepository.fetchCartItems(userId);
       emit(CartLoaded(items));

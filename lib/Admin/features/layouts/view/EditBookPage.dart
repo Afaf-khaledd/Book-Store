@@ -2,6 +2,7 @@ import 'package:book_store/User/features/layouts/view/LoadingIndicator.dart';
 import 'package:book_store/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../User/features/data/models/BookModel.dart';
@@ -74,11 +75,9 @@ class _EditBookPageState extends State<EditBookPage> {
           _thumbnailUrl = imageUrl;
         });
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to upload image')),
-        );
-      }
+        Fluttertoast.showToast(msg: 'Failed to upload image',backgroundColor: Colors.redAccent);
 
+      }
       setState(() {
         _isUploadingImage = false;
       });
@@ -169,7 +168,7 @@ class _EditBookPageState extends State<EditBookPage> {
               BlocBuilder<CategoryCubit, CategoryState>(
                 builder: (context, state) {
                   if (state is CategoryLoading) {
-                    return const CircularProgressIndicator();
+                    return const NewLoadingIndicator();
                   } else if (state is CategoryLoaded) {
                     final categories = state.categories;
                     return DropdownButtonFormField<String>(
@@ -307,9 +306,12 @@ class _EditBookPageState extends State<EditBookPage> {
                     );
                     if (widget.book == null) {
                       cubit.addBook(book);
+
                     } else {
                       cubit.updateBook(book);
                     }
+                    cubit.fetchBooks();
+                    cubit.fetchLowStockBooks();
                     Navigator.pop(context);
                   }
                 },

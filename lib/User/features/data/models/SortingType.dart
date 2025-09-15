@@ -17,7 +17,6 @@ class SortByPrice implements BookSortingStrategy {
   }
 }
 
-
 class SortByPopularity implements BookSortingStrategy {
   @override
   List<BookModel> sort(List<BookModel> books) {

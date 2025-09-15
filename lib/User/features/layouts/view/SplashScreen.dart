@@ -1,9 +1,8 @@
-import 'package:book_store/Admin/features/layouts/view/Dashboard.dart';
-import 'package:book_store/User/features/layouts/view/OnboardingPage.dart';
+
 import 'package:flutter/material.dart';
 
+import '../../../../core/NavigationFactory.dart';
 import '../../../../core/SharedPreference.dart';
-import 'MainNavPage.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -51,10 +50,10 @@ class _SplashPageState extends State<SplashPage> {
     );
   }
   void navigateToHome() async{
-    bool rememberMe = await SharedPreference.instance.getRememberMe();
-    bool isAdmin = await SharedPreference.instance.getIsAdmin();
+    bool rememberMe = await SharedPreference().getRememberMe();
+    bool isAdmin = await SharedPreference().getIsAdmin();
     Future.delayed(const Duration(seconds: 3), () {
-      if (rememberMe) {
+      /*if (rememberMe) {
         if(isAdmin){
           Navigator.pushReplacement(
             context,
@@ -72,7 +71,16 @@ class _SplashPageState extends State<SplashPage> {
           context,
           MaterialPageRoute(builder: (context) => const OnboardingPage()),
         );
-      }
+      }*/
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => NavigationFactory.getNextPage(
+            rememberMe: rememberMe,
+            isAdmin: isAdmin,
+          ),
+        ),
+      );
     });
   }
 

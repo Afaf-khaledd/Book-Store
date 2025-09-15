@@ -28,9 +28,13 @@ class BooksAdminRepository{
 
   Future<void> updateBook(BookModel book) async {
     await _bookCollection.doc(book.id).update(book.toJson());
+    fetchBooks();
+    fetchLowStockBooks();
   }
 
   Future<void> deleteBook(String id) async {
     await _bookCollection.doc(id).delete();
+    fetchBooks();
+    fetchLowStockBooks();
   }
 }
